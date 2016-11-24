@@ -2,7 +2,13 @@
 *.swp
 *.swo
 *.*~
+*/~*
 
 # Log files
 *.log
 
+# Dependency
+node_modules/
+
+# Test files
+test_src/
