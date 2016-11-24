@@ -69,32 +69,42 @@ create table article (
 );
 
 create table project_team (
+    pj_tm_id int auto_increment,
 	pr_id int NOT NULL,
     tm_id int NOT NULL,
+    PRIMARY KEY (pj_tm_id),
     FOREIGN KEY (pr_id) REFERENCES project(pj_id),
     FOREIGN KEY (tm_id) REFERENCES team(tm_id)
 );
 create table project_article (
+    pj_ar_id int auto_increment,
 	pj_id int NOT NULL,
     ar_id int NOT NULL,
+    PRIMARY KEY (pj_ar_id),
     FOREIGN KEY (pj_id) REFERENCES project(pj_id),
     FOREIGN KEY (ar_id) REFERENCES article(ar_id)
 );
 create table project_data_tool (
+    pj_dt_id int auto_increment,
 	pj_id int NOT NULL,
     dt_id int NOT NULL,
+    PRIMARY KEY (pj_dt_id),
     FOREIGN KEY (pj_id) REFERENCES project(pj_id),
     FOREIGN KEY (dt_id) REFERENCES data_tool(dt_id)
 );
 create table team_member (
+	tm_mb_id int auto_increment,
 	tm_id int NOT NULL,
     mb_id int NOT NULL,
+    PRIMARY KEY (tm_mb_id),
     FOREIGN KEY (tm_id) REFERENCES team(tm_id),
     FOREIGN KEY (mb_id) REFERENCES member(mb_id)
 );
 create table team_article (
+    tm_ar_id int auto_increment,
 	tm_id int NOT NULL,
     ar_id int NOT NULL,
+    PRIMARY KEY (tm_ar_id),
     FOREIGN KEY (tm_id) REFERENCES team(tm_id),
     FOREIGN KEY (ar_id) REFERENCES article(ar_id)
 );
