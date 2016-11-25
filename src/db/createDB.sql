@@ -2,6 +2,7 @@ drop database if exists research_platform;
 
 create database research_platform;
 use research_platform;
+alter database research_platform character set utf8;
 
 create table users (
 	username varchar(255),
@@ -19,7 +20,7 @@ create table team (
 	tm_id int NOT NULL auto_increment,
 	tm_name varchar(255) NOT NULL,
     tm_focus text NOT NULL,
-    tm_task text,
+    tm_work text,
     PRIMARY KEY (tm_id)
 );
 create table member (
@@ -41,8 +42,8 @@ create table data_tool (
 create table conference (
 	cf_id int NOT NULL auto_increment,
 	cf_title varchar(255) NOT NULL,
-    cf_intro text,
-    cf_detail text,
+    cf_content text,
+    cf_date date NOT NULL,
     PRIMARY KEY (cf_id)
 );
 create table notification (
@@ -52,7 +53,7 @@ create table notification (
     nt_date date NOT NULL,
     PRIMARY KEY (nt_id)
 );
-create table news(
+create table news (
 	ne_id int NOT NULL auto_increment,
 	ne_title varchar(255) NOT NULL,
     ne_content text,

@@ -14,7 +14,7 @@
                     "text": true
                 },
                 "type": "int(11)",
-                "allowNull": false,
+                "allowNull": true,
                 "defaultValue": null,
                 "listview": {
                     "show": true
@@ -59,7 +59,7 @@
                 "name": "ar_date",
                 "verbose": "ar_date",
                 "control": {
-                    "text": true
+                    "date": true
                 },
                 "type": "date",
                 "allowNull": false,
@@ -114,7 +114,7 @@
                     "text": true
                 },
                 "type": "int(11)",
-                "allowNull": false,
+                "allowNull": true,
                 "defaultValue": null,
                 "listview": {
                     "show": true
@@ -140,10 +140,10 @@
                 }
             },
             {
-                "name": "cf_intro",
-                "verbose": "cf_intro",
+                "name": "cf_content",
+                "verbose": "cf_content",
                 "control": {
-                    "text": true
+                    "textarea": true
                 },
                 "type": "text",
                 "allowNull": true,
@@ -156,13 +156,13 @@
                 }
             },
             {
-                "name": "cf_detail",
-                "verbose": "cf_detail",
+                "name": "cf_date",
+                "verbose": "cf_date",
                 "control": {
-                    "text": true
+                    "date": true
                 },
-                "type": "text",
-                "allowNull": true,
+                "type": "year(4)",
+                "allowNull": false,
                 "defaultValue": null,
                 "listview": {
                     "show": true
@@ -198,7 +198,7 @@
                     "text": true
                 },
                 "type": "int(11)",
-                "allowNull": false,
+                "allowNull": true,
                 "defaultValue": null,
                 "listview": {
                     "show": true
@@ -259,7 +259,7 @@
                 "name": "dt_content",
                 "verbose": "dt_content",
                 "control": {
-                    "text": true
+                    "textarea": true
                 },
                 "type": "text",
                 "allowNull": true,
@@ -298,7 +298,7 @@
                     "text": true
                 },
                 "type": "int(11)",
-                "allowNull": false,
+                "allowNull": true,
                 "defaultValue": null,
                 "listview": {
                     "show": true
@@ -359,7 +359,7 @@
                 "name": "mb_work",
                 "verbose": "mb_work",
                 "control": {
-                    "text": true
+                    "textarea": true
                 },
                 "type": "text",
                 "allowNull": true,
@@ -398,7 +398,7 @@
                     "text": true
                 },
                 "type": "int(11)",
-                "allowNull": false,
+                "allowNull": true,
                 "defaultValue": null,
                 "listview": {
                     "show": true
@@ -427,7 +427,7 @@
                 "name": "ne_content",
                 "verbose": "ne_content",
                 "control": {
-                    "text": true
+                    "textarea": true
                 },
                 "type": "text",
                 "allowNull": true,
@@ -443,7 +443,7 @@
                 "name": "ne_date",
                 "verbose": "ne_date",
                 "control": {
-                    "text": true
+                    "date": true
                 },
                 "type": "date",
                 "allowNull": false,
@@ -467,12 +467,12 @@
             "readonly": false
         }
     },
-    "notifications": {
-        "slug": "notifications",
+    "notification": {
+        "slug": "notification",
         "table": {
-            "name": "notifications",
+            "name": "notification",
             "pk": "nt_id",
-            "verbose": "notifications"
+            "verbose": "notification"
         },
         "columns": [
             {
@@ -482,7 +482,7 @@
                     "text": true
                 },
                 "type": "int(11)",
-                "allowNull": false,
+                "allowNull": true,
                 "defaultValue": null,
                 "listview": {
                     "show": true
@@ -511,7 +511,7 @@
                 "name": "nt_content",
                 "verbose": "nt_content",
                 "control": {
-                    "text": true
+                    "textarea": true
                 },
                 "type": "text",
                 "allowNull": true,
@@ -527,9 +527,9 @@
                 "name": "nt_date",
                 "verbose": "nt_date",
                 "control": {
-                    "text": true
+                    "date": true
                 },
-                "type": "date",
+                "type": "year(4)",
                 "allowNull": false,
                 "defaultValue": null,
                 "listview": {
@@ -566,7 +566,7 @@
                     "text": true
                 },
                 "type": "int(11)",
-                "allowNull": false,
+                "allowNull": true,
                 "defaultValue": null,
                 "listview": {
                     "show": true
@@ -595,7 +595,7 @@
                 "name": "pj_intro",
                 "verbose": "pj_intro",
                 "control": {
-                    "text": true
+                    "textarea": true
                 },
                 "type": "text",
                 "allowNull": true,
@@ -611,7 +611,7 @@
                 "name": "pj_progress",
                 "verbose": "pj_progress",
                 "control": {
-                    "text": true
+                    "textarea": true
                 },
                 "type": "text",
                 "allowNull": true,
@@ -650,7 +650,7 @@
                     "text": true
                 },
                 "type": "int(11)",
-                "allowNull": false,
+                "allowNull": true,
                 "defaultValue": null,
                 "listview": {
                     "show": true
@@ -718,7 +718,7 @@
                     "text": true
                 },
                 "type": "int(11)",
-                "allowNull": false,
+                "allowNull": true,
                 "defaultValue": null,
                 "listview": {
                     "show": true
@@ -786,7 +786,7 @@
                     "text": true
                 },
                 "type": "int(11)",
-                "allowNull": false,
+                "allowNull": true,
                 "defaultValue": null,
                 "listview": {
                     "show": true
@@ -854,7 +854,7 @@
                     "text": true
                 },
                 "type": "int(11)",
-                "allowNull": false,
+                "allowNull": true,
                 "defaultValue": null,
                 "listview": {
                     "show": true
@@ -896,10 +896,10 @@
                 }
             },
             {
-                "name": "tm_task",
-                "verbose": "tm_task",
+                "name": "tm_work",
+                "verbose": "tm_work",
                 "control": {
-                    "text": true
+                    "textarea": true
                 },
                 "type": "text",
                 "allowNull": true,
@@ -938,7 +938,7 @@
                     "text": true
                 },
                 "type": "int(11)",
-                "allowNull": false,
+                "allowNull": true,
                 "defaultValue": null,
                 "listview": {
                     "show": true
@@ -1006,7 +1006,7 @@
                     "text": true
                 },
                 "type": "int(11)",
-                "allowNull": false,
+                "allowNull": true,
                 "defaultValue": null,
                 "listview": {
                     "show": true
