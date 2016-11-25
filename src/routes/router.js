@@ -63,7 +63,39 @@ router.get('/conference/:cf:id', function(req, res, next) {
 });
 
 router.get('/article', function(req, res, next) {
-	res.render('list', {content_type: 'Article'});
+	var result = [];
+	var mysql = require('mysql')
+	var connection = mysql.createConnection({
+	  host     : 'localhost',
+	  user     : 'root',
+	  password : 'root',
+	  database : 'research_platform'
+	});
+
+	connection.connect();
+
+	connection.query('SELECT ar_title AS title, ar_link AS url FROM article;', function(err, rows, fields) {
+		if (err) throw err;
+		console.log('Type of rows: ', typeof(rows[0]));
+		console.log('Length of rows: ', rows.length);
+		console.log(rows);
+		console.log(rows[0]);
+
+		for (i = 0; i < rows.length; i++) {
+			result.push({'title': rows[i].title, 'url': rows[i].url});
+		}
+
+		// res.render('list', {content_type: 'Article'});
+		res.render('list', {content_type: 'Article', list_items: result});
+	});
+
+	connection.end();
+
+	for (i = 0; i < result.length; i++) {
+		console.log('Title: ', result[i].title, ' Url: ', result[i].url);
+	}
+
+	// res.render('list', {content_type: 'Article', result});
 });
 
 router.get('/data_tool', function(req, res, next) {

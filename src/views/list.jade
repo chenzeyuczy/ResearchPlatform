@@ -5,3 +5,34 @@ block content
 	h3 This is a list view
 	if title
 		p welcome to #{title}
+
+	- var foo = "hello world"
+	h1= foo
+	- var items = ['item1', 'item2', 'item3']
+	ul#list_content
+		for item in items
+			li= item
+		else
+			li Empty list!
+
+	- var itemsWithAttr = [{"key": "a", "value": 1, "url": "url1"}, {"key": "b", "value": 2}, {"key": "c", "value": 3, "url": "url3"}]
+	ul#another_list
+		for item in itemsWithAttr
+			li
+				// a(href=item.url) Value of item.key is item.value
+				if item.url
+					a(href=item.url) Value of #{item.key} is #{item.value}
+				else
+					div Value of #{item.key} is #{item.value}
+		else
+			li Empty list!
+
+	ul
+		for item in list_items
+			li
+				if item.url
+					a(href=item.url) #{item.title}
+				else
+					div #{item.title}
+		else
+			li Empty list!
