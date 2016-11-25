@@ -161,7 +161,7 @@
                 "control": {
                     "date": true
                 },
-                "type": "year(4)",
+                "type": "date",
                 "allowNull": false,
                 "defaultValue": null,
                 "listview": {
@@ -529,7 +529,7 @@
                 "control": {
                     "date": true
                 },
-                "type": "year(4)",
+                "type": "date",
                 "allowNull": false,
                 "defaultValue": null,
                 "listview": {
