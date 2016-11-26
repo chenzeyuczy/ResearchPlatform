@@ -3,5 +3,9 @@ extend layout
 block content
 	h1 #{content_type}
 	h3 This is a detail view
+	
 	if title
-		p welcome to #{title}
+		h1 #{title}
+		div #{detail}
+	else
+		div Empty content!
