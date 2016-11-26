@@ -1,8 +1,10 @@
 // Configuration for database.
 
-var db = {
-	database: "localhost.research_platform",
-	username: "admin",
-	passwd: "admin",
-	port: 3306
+var db_config = {
+	host     : 'localhost',
+	user     : 'root',
+	password : 'root',
+	database : 'research_platform'
 };
+
+module.exports = db_config;

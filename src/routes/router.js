@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var db_config = require('../db/db_config');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -64,38 +65,24 @@ router.get('/conference/:cf:id', function(req, res, next) {
 
 router.get('/article', function(req, res, next) {
 	var result = [];
+	console.log(db_config);
 	var mysql = require('mysql')
-	var connection = mysql.createConnection({
-	  host     : 'localhost',
-	  user     : 'root',
-	  password : 'root',
-	  database : 'research_platform'
-	});
-
+	var connection = mysql.createConnection(db_config);
 	connection.connect();
-
 	connection.query('SELECT ar_title AS title, ar_link AS url FROM article;', function(err, rows, fields) {
 		if (err) throw err;
-		console.log('Type of rows: ', typeof(rows[0]));
-		console.log('Length of rows: ', rows.length);
-		console.log(rows);
-		console.log(rows[0]);
 
 		for (i = 0; i < rows.length; i++) {
 			result.push({'title': rows[i].title, 'url': rows[i].url});
 		}
 
-		// res.render('list', {content_type: 'Article'});
+		for (i = 0; i < result.length; i++) {
+			console.log('Title: ', result[i].title, ' Url: ', result[i].url);
+		}
 		res.render('list', {content_type: 'Article', list_items: result});
 	});
-
 	connection.end();
 
-	for (i = 0; i < result.length; i++) {
-		console.log('Title: ', result[i].title, ' Url: ', result[i].url);
-	}
-
-	// res.render('list', {content_type: 'Article', result});
 });
 
 router.get('/data_tool', function(req, res, next) {

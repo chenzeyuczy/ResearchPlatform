@@ -7,6 +7,7 @@ alter database research_platform character set utf8;
 create table users (
 	username varchar(255),
     passwd varchar(255) NOT NULL,
+    type int NOT NULL DEFAULT 0,
     PRIMARY KEY (username)
 );
 create table project (
@@ -75,15 +76,18 @@ create table project_team (
     tm_id int NOT NULL,
     PRIMARY KEY (pj_tm_id),
     FOREIGN KEY (pr_id) REFERENCES project(pj_id),
-    FOREIGN KEY (tm_id) REFERENCES team(tm_id)
+    FOREIGN KEY (tm_id) REFERENCES team(tm_id),
+    CONSTRAINT pj_tm UNIQUE (pr_id, tm_id)
 );
 create table project_article (
     pj_ar_id int auto_increment,
 	pj_id int NOT NULL,
     ar_id int NOT NULL,
+    pr_ar_type int NOT NULL DEFAULT 0,
     PRIMARY KEY (pj_ar_id),
     FOREIGN KEY (pj_id) REFERENCES project(pj_id),
-    FOREIGN KEY (ar_id) REFERENCES article(ar_id)
+    FOREIGN KEY (ar_id) REFERENCES article(ar_id),
+    CONSTRAINT pj_ar UNIQUE (pj_id, ar_id)
 );
 create table project_data_tool (
     pj_dt_id int auto_increment,
@@ -91,7 +95,8 @@ create table project_data_tool (
     dt_id int NOT NULL,
     PRIMARY KEY (pj_dt_id),
     FOREIGN KEY (pj_id) REFERENCES project(pj_id),
-    FOREIGN KEY (dt_id) REFERENCES data_tool(dt_id)
+    FOREIGN KEY (dt_id) REFERENCES data_tool(dt_id),
+    CONSTRAINT pj_dt UNIQUE (pj_id, dt_id)
 );
 create table team_member (
 	tm_mb_id int auto_increment,
@@ -99,7 +104,8 @@ create table team_member (
     mb_id int NOT NULL,
     PRIMARY KEY (tm_mb_id),
     FOREIGN KEY (tm_id) REFERENCES team(tm_id),
-    FOREIGN KEY (mb_id) REFERENCES member(mb_id)
+    FOREIGN KEY (mb_id) REFERENCES member(mb_id),
+    CONSTRAINT tm_mb UNIQUE (tm_id, mb_id)
 );
 create table team_article (
     tm_ar_id int auto_increment,
@@ -107,5 +113,6 @@ create table team_article (
     ar_id int NOT NULL,
     PRIMARY KEY (tm_ar_id),
     FOREIGN KEY (tm_id) REFERENCES team(tm_id),
-    FOREIGN KEY (ar_id) REFERENCES article(ar_id)
+    FOREIGN KEY (ar_id) REFERENCES article(ar_id),
+    CONSTRAINT tm_ar UNIQUE (tm_id, ar_id)
 );

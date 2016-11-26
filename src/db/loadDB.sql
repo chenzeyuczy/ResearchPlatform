@@ -196,7 +196,7 @@ CREATE TABLE `project` (
 
 LOCK TABLES `project` WRITE;
 /*!40000 ALTER TABLE `project` DISABLE KEYS */;
-INSERT INTO `project` VALUES (1,'课题1','介绍1','进展1'),(2,'课题2','介绍2','进展2'),(3,'课题3','信息3','进展3'),(4,'课题4','信息4','进展4'),(5,'课题5','介绍5','进展5');
+INSERT INTO `project` VALUES (1,'课题1','介绍1','进展1'),(2,'课题2','介绍2','进展2'),(3,'课题3','介绍3','进展3'),(4,'课题4','介绍4','进展4'),(5,'课题5','介绍5','进展5');
 /*!40000 ALTER TABLE `project` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -211,12 +211,13 @@ CREATE TABLE `project_article` (
   `pj_ar_id` int(11) NOT NULL AUTO_INCREMENT,
   `pj_id` int(11) NOT NULL,
   `ar_id` int(11) NOT NULL,
+  `pr_ar_type` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`pj_ar_id`),
-  KEY `pj_id` (`pj_id`),
+  UNIQUE KEY `pj_ar` (`pj_id`,`ar_id`),
   KEY `ar_id` (`ar_id`),
   CONSTRAINT `project_article_ibfk_1` FOREIGN KEY (`pj_id`) REFERENCES `project` (`pj_id`),
   CONSTRAINT `project_article_ibfk_2` FOREIGN KEY (`ar_id`) REFERENCES `article` (`ar_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -225,7 +226,7 @@ CREATE TABLE `project_article` (
 
 LOCK TABLES `project_article` WRITE;
 /*!40000 ALTER TABLE `project_article` DISABLE KEYS */;
-INSERT INTO `project_article` VALUES (1,1,5),(2,2,4),(3,3,2),(4,4,3),(5,5,1);
+INSERT INTO `project_article` VALUES (1,1,3,0),(3,1,2,1),(4,2,1,0),(5,2,4,1),(6,2,5,0),(7,3,2,1);
 /*!40000 ALTER TABLE `project_article` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -241,7 +242,7 @@ CREATE TABLE `project_data_tool` (
   `pj_id` int(11) NOT NULL,
   `dt_id` int(11) NOT NULL,
   PRIMARY KEY (`pj_dt_id`),
-  KEY `pj_id` (`pj_id`),
+  UNIQUE KEY `pj_dt` (`pj_id`,`dt_id`),
   KEY `dt_id` (`dt_id`),
   CONSTRAINT `project_data_tool_ibfk_1` FOREIGN KEY (`pj_id`) REFERENCES `project` (`pj_id`),
   CONSTRAINT `project_data_tool_ibfk_2` FOREIGN KEY (`dt_id`) REFERENCES `data_tool` (`dt_id`)
@@ -254,7 +255,7 @@ CREATE TABLE `project_data_tool` (
 
 LOCK TABLES `project_data_tool` WRITE;
 /*!40000 ALTER TABLE `project_data_tool` DISABLE KEYS */;
-INSERT INTO `project_data_tool` VALUES (1,1,2),(2,2,3),(3,3,4),(4,4,5),(5,5,1);
+INSERT INTO `project_data_tool` VALUES (5,1,5),(4,2,4),(3,3,3),(2,4,2),(1,5,1);
 /*!40000 ALTER TABLE `project_data_tool` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -270,11 +271,11 @@ CREATE TABLE `project_team` (
   `pr_id` int(11) NOT NULL,
   `tm_id` int(11) NOT NULL,
   PRIMARY KEY (`pj_tm_id`),
-  KEY `pr_id` (`pr_id`),
+  UNIQUE KEY `pj_tm` (`pr_id`,`tm_id`),
   KEY `tm_id` (`tm_id`),
   CONSTRAINT `project_team_ibfk_1` FOREIGN KEY (`pr_id`) REFERENCES `project` (`pj_id`),
   CONSTRAINT `project_team_ibfk_2` FOREIGN KEY (`tm_id`) REFERENCES `team` (`tm_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -283,7 +284,7 @@ CREATE TABLE `project_team` (
 
 LOCK TABLES `project_team` WRITE;
 /*!40000 ALTER TABLE `project_team` DISABLE KEYS */;
-INSERT INTO `project_team` VALUES (1,1,1),(2,2,5),(3,3,4),(4,4,3),(5,5,2);
+INSERT INTO `project_team` VALUES (3,1,1),(1,1,3),(2,2,3),(6,3,2),(4,4,2),(5,5,1);
 /*!40000 ALTER TABLE `project_team` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -325,11 +326,11 @@ CREATE TABLE `team_article` (
   `tm_id` int(11) NOT NULL,
   `ar_id` int(11) NOT NULL,
   PRIMARY KEY (`tm_ar_id`),
-  KEY `tm_id` (`tm_id`),
+  UNIQUE KEY `tm_ar` (`tm_id`,`ar_id`),
   KEY `ar_id` (`ar_id`),
   CONSTRAINT `team_article_ibfk_1` FOREIGN KEY (`tm_id`) REFERENCES `team` (`tm_id`),
   CONSTRAINT `team_article_ibfk_2` FOREIGN KEY (`ar_id`) REFERENCES `article` (`ar_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -338,7 +339,7 @@ CREATE TABLE `team_article` (
 
 LOCK TABLES `team_article` WRITE;
 /*!40000 ALTER TABLE `team_article` DISABLE KEYS */;
-INSERT INTO `team_article` VALUES (1,1,1),(2,2,3),(3,3,2),(4,4,5),(6,5,4);
+INSERT INTO `team_article` VALUES (1,1,1),(4,1,3),(2,2,2),(6,2,4),(7,3,5);
 /*!40000 ALTER TABLE `team_article` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -354,11 +355,11 @@ CREATE TABLE `team_member` (
   `tm_id` int(11) NOT NULL,
   `mb_id` int(11) NOT NULL,
   PRIMARY KEY (`tm_mb_id`),
-  KEY `tm_id` (`tm_id`),
+  UNIQUE KEY `tm_mb` (`tm_id`,`mb_id`),
   KEY `mb_id` (`mb_id`),
   CONSTRAINT `team_member_ibfk_1` FOREIGN KEY (`tm_id`) REFERENCES `team` (`tm_id`),
   CONSTRAINT `team_member_ibfk_2` FOREIGN KEY (`mb_id`) REFERENCES `member` (`mb_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -367,7 +368,7 @@ CREATE TABLE `team_member` (
 
 LOCK TABLES `team_member` WRITE;
 /*!40000 ALTER TABLE `team_member` DISABLE KEYS */;
-INSERT INTO `team_member` VALUES (1,1,3),(2,2,4),(3,3,5),(4,4,2),(5,5,1);
+INSERT INTO `team_member` VALUES (4,1,3),(1,1,5),(3,2,4),(5,2,5),(6,3,1),(2,3,2);
 /*!40000 ALTER TABLE `team_member` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -381,6 +382,7 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `username` varchar(255) NOT NULL,
   `passwd` varchar(255) NOT NULL,
+  `type` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -391,7 +393,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('David','key1'),('John','key3'),('Lily','key2'),('Lucy','key5'),('Tom','key4');
+INSERT INTO `users` VALUES ('user1','key1',0),('user2','key2',0),('user3','key3',1),('user4','key4',1),('user5','key5',2);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -404,4 +406,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-26  2:11:43
+-- Dump completed on 2016-11-26 12:41:34
