@@ -7,8 +7,8 @@ block content
 	ul
 		for item in list_items
 			li
-				if item.url
-					a(href=item.url) #{item.title}
+				if item.link
+					a(href=item.link) #{item.title}
 				else
 					div #{item.title}
 		else
