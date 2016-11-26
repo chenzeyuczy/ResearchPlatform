@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var db_config = require('../db/db_config');
+var mysql = require('mysql')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -40,7 +41,17 @@ router.get('/member/:mb_id', function(req, res, next) {
 });
 
 router.get('/news', function(req, res, next) {
-	res.render('list', {content_type: 'News'});
+	var result = [];
+	var connection = mysql.createConnection(db_config);
+	connection.connect();
+	connection.query('SELECT ne_title AS title, ne_id AS id FROM news;', function(err, rows, fields) {
+		if (err) throw err;
+		for (i = 0; i < rows.length; i++) {
+			result.push({'title': rows[i].title, 'url': '/news/' + rows[i].id});
+		}
+		console.log(result);
+		res.render('list', {content_type: 'News', list_items: result});
+	});
 });
 
 router.get('/news/:ne_id', function(req, res, next) {
@@ -48,7 +59,18 @@ router.get('/news/:ne_id', function(req, res, next) {
 });
 
 router.get('/notification', function(req, res, next) {
-	res.render('list', {content_type: 'Notification'});
+	var result = [];
+	var connection = mysql.createConnection(db_config);
+	connection.connect();
+	connection.query('SELECT nt_title AS title, nt_id AS id FROM notification;', function(err, rows, fields) {
+		if (err) throw err;
+		for (i = 0; i < rows.length; i++) {
+			result.push({'title': rows[i].title, 'url': '/notification/' + rows[i].id});
+		}
+		console.log(result);
+		res.render('list', {content_type: 'Notification', list_items: result});
+	});
+	connection.end();
 });
 
 router.get('/notification/:nt_id', function(req, res, next) {
@@ -65,24 +87,17 @@ router.get('/conference/:cf:id', function(req, res, next) {
 
 router.get('/article', function(req, res, next) {
 	var result = [];
-	console.log(db_config);
-	var mysql = require('mysql')
 	var connection = mysql.createConnection(db_config);
 	connection.connect();
 	connection.query('SELECT ar_title AS title, ar_link AS url FROM article;', function(err, rows, fields) {
 		if (err) throw err;
-
 		for (i = 0; i < rows.length; i++) {
 			result.push({'title': rows[i].title, 'url': rows[i].url});
 		}
-
-		for (i = 0; i < result.length; i++) {
-			console.log('Title: ', result[i].title, ' Url: ', result[i].url);
-		}
+		console.log(result);
 		res.render('list', {content_type: 'Article', list_items: result});
 	});
 	connection.end();
-
 });
 
 router.get('/data_tool', function(req, res, next) {
