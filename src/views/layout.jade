@@ -1,17 +1,56 @@
 doctype html
 html
-  head
-    title= title
-    link(rel='stylesheet', href='/css/style.css')
-  body
-    .navigation
-      a(href="/index") Index
-      br
-      a(href="/notification") Notification
-      br
-      a(href="/member") Member
-      br
-      a(href="/member/zhangsan") MemberA
-      br
-      a(href="/news/ne_id=666") NewsB
-    block content
+  include head.jade
+
+  body.sticky-header-on.tablet-sticky-header
+    #fb-root
+    script.
+      (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+      fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+
+    // Container
+    .container
+      include header.jade
+      block content
+      include footer.jade
+    // /Container
+
+    // JavaScript
+    // Bootstrap
+    script(type='text/javascript', src='js/bootstrap.min.js')
+    // Modernizr
+    script(type='text/javascript', src='js/modernizr.js')
+    // Sliders/Carousels
+    script(type='text/javascript', src='js/jquery.flexslider-min.js')
+    script(type='text/javascript', src='js/owl.carousel.min.js')
+    // Revolution Slider
+    script(type='text/javascript', src='js/revolution-slider/js/jquery.themepunch.plugins.min.js')
+    script(type='text/javascript', src='js/revolution-slider/js/jquery.themepunch.revolution.min.js')
+    // Calendar
+    script(type='text/javascript', src='js/responsive-calendar.min.js')
+    // Raty
+    script(type='text/javascript', src='js/jquery.raty.min.js')
+    // Chosen
+    script(type='text/javascript', src='js/chosen.jquery.min.js')
+    // jFlickrFeed
+    script(type='text/javascript', src='js/jflickrfeed.min.js')
+    // InstaFeed
+    script(type='text/javascript', src='js/instafeed.min.js')
+    // Twitter
+    script(type='text/javascript', src='php/twitter/jquery.tweet.js')
+    // MixItUp
+    script(type='text/javascript', src='js/jquery.mixitup.js')
+    // JackBox
+    script(type='text/javascript', src='jackbox/js/jackbox-packed.min.js')
+    // CloudZoom
+    script(type='text/javascript', src='js/zoomsl-3.0.min.js')
+    // Main Script
+    script(type='text/javascript', src='js/script.js')
+    //if lt IE 9
+      script(type='text/javascript', src='js/jquery.placeholder.js')
+      script(type='text/javascript', src='js/script_ie.js')

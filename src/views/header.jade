@@ -1,0 +1,83 @@
+// Header
+header#header.animate-onscroll
+  // Main Header
+  #main-header
+    .container
+      .row
+        // Logo
+        #logo.col-lg-3.col-md-3.col-sm-3
+          a(href='main-v1.html')
+            img(src='img/logo.png', alt='Logo')
+        // /Logo
+        // Main Quote
+        .col-lg-5.col-md-4.col-sm-4
+          blockquote
+            | Nam elit agna,enderit sit amet, tinciunt ac,
+            br
+            | viverra sed, nulla..
+        // /Main Quote
+        // Newsletter
+        .col-lg-4.col-md-5.col-sm-5
+          form#newsletter(action='php/newsletter-form.php', method='POST')
+            h5
+              strong
+                a(href='signUp.html')
+                  u Sign up
+              |  for email updates
+            .newsletter-form
+              .newsletter-email
+                input(type='text', name='newsletter-email', placeholder='Email address')
+              .newsletter-zip
+                input(type='text', name='newsletter-zip', placeholder='Zip code')
+              .newsletter-submit
+                input(type='submit', value='')
+                i.icons.icon-right-thin
+        // /Newsletter
+  // /Main Header
+  // Lower Header
+  #lower-header
+    .container
+      #menu-button
+        div
+          span
+          span
+          span
+        span Menu
+      ul#navigation
+        // Home
+        li.home-button.current-menu-item
+          a(href='index.html')
+            i.icons.icon-home
+        // /Home
+        // Pages
+        li
+          a(href='aboutproject.html') 关于项目
+        // /Pages
+        // Events
+        li
+          a(href='aboutteam.html') 研究团队
+        // /Events
+        // Media
+        li
+          a(href='news.html') 新闻动态
+        // /Media
+        li
+          a(href='inform.html') 最新公告
+        // Get Involved
+        li
+          a(href='share.html') 学术交流
+        // /Get Involved
+        // Features
+        li
+          a(href='tool.html') 数据工具
+        // /Features
+        // Blog
+        // /Blog
+        // Shop
+        // /Shop
+        // Donate
+        li.donate-button
+          a(href='contactUs.html') 联系我们
+        // /Donate
+  // /Lower Header
+// /Header
