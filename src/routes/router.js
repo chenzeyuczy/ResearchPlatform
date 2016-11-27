@@ -56,7 +56,7 @@ router.get('/news', function(req, res, next) {
 		}
 		console.log('Number of matched query: ', rows.length);
 		console.log(result);
-		res.render('list', {content_type: 'News', list_items: result});
+		res.render('list_view', {content_type: 'News', content_type_cn: '新闻动态', list_items: result});
 	});
 });
 
@@ -93,7 +93,7 @@ router.get('/notification', function(req, res, next) {
 		}
 		console.log('Number of matched query: ', rows.length);
 		console.log(result);
-		res.render('list', {content_type: 'Notification', list_items: result});
+		res.render('list_view', {content_type: 'Notification', content_type_cn: '最新公告', list_items: result});
 	});
 	connection.end();
 });
