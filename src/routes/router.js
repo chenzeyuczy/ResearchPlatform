@@ -172,4 +172,12 @@ router.post('/logout', function(req, res, next) {
 	res.redirect('index');
 });
 
+router.get('/inform_news', function(req, res, next) {
+	res.render('inform&news');
+});
+
+router.get('/contact', function(req, res, next) {
+	res.render('contact');
+});
+
 module.exports = router;
