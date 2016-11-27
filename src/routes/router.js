@@ -5,7 +5,7 @@ var mysql = require('mysql')
 
 /* Index page */
 router.get('/', function(req, res, next) {
-  res.redirect('index');
+  res.redirect('/index');
 });
 
 router.get('/index', function(req, res, next) {
@@ -65,7 +65,11 @@ router.get('/news/:ne_id', function(req, res, next) {
 	var sql = 'SELECT ne_title AS title, ne_content AS content FROM news WHERE ne_id = ' + req.params['ne_id'] + ';';
 	connection.connect();
 	connection.query(sql, function(err, rows, fields) {
-		if (err) throw err;
+		if (err) {
+			// throw err;
+			res.render('detail', {content_type: 'News'});
+			return;
+		}
 		console.log('Number of matched query: ', rows.length);
 		console.log(rows);
 		if (rows.length > 0) {
@@ -99,7 +103,11 @@ router.get('/notification/:nt_id', function(req, res, next) {
 	var sql = 'SELECT nt_title AS title, nt_content AS content FROM notification WHERE nt_id = ' + req.params['nt_id'] + ';';
 	connection.connect();
 	connection.query(sql, function(err, rows, fields) {
-		if (err) throw err;
+		if (err) {
+			// throw err;
+			res.render('detail', {content_type: 'Notification'});
+			return;
+		}
 		console.log('Number of matched query: ', rows.length);
 		console.log(rows);
 		if (rows.length > 0) {
@@ -149,19 +157,19 @@ router.get('/data_tool/:dt_id', function(req, res, next) {
 
 /* User page */
 router.get('/register', function(req, res, next) {
-	res.render('/index');
+	res.render('register');
 });
 
 router.post('/register', function(req, res, next) {
-	res.render('/index');
+	res.redirect('index');
 });
 
 router.post('/login', function(req, res, next) {
-	res.render('/index');
+	res.redirect('index');
 });
 
 router.post('/logout', function(req, res, next) {
-	res.render('/index');
+	res.redirect('index');
 });
 
 module.exports = router;

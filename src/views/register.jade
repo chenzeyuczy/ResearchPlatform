@@ -1,0 +1,133 @@
+extend layout
+
+block content
+
+  section#content
+    // Page Heading
+    section.section.page-heading.animate-onscroll
+      h1 注册
+      p.breadcrumb
+        a(href='main-v1.html') Please sign up
+    // Page Heading
+    // Section
+    section.section.full-width-bg.gray-bg
+      .row
+        .col-lg-9.col-md-9.col-sm-8
+          form#signUp-form(action='php/contact-form.php', method='POST')
+            .notification-input
+              label 请输入用户名
+              .info
+                input(type='text')
+                label Username is taken
+              label 请输入密码
+              .info
+                input(type='password')
+                label Username is taken
+              label 请重复密码
+              .info
+                input(type='password')
+                label Username is taken
+              label 请输入邮箱
+              .info
+                input(type='text')
+                label Username is taken
+            div
+              input#radio-1(type='radio', name='radiogroup')
+              label(for='radio-1') 男
+              input#radio-2(type='radio', name='radiogroup')
+              label(for='radio-2') 女
+            input(type='submit', value='submit')
+        // Sidebar
+        .col-lg-3.col-md-3.col-sm-4.sidebar
+          .social-media.animate-onscroll
+            span.small-caption Get connected:
+            ul.social-icons
+              li.facebook
+                a.tooltip-ontop(href='#', title='Facebook')
+                  i.icons.icon-facebook
+              li.twitter
+                a.tooltip-ontop(href='#', title='Twitter')
+                  i.icons.icon-twitter
+              li.google
+                a.tooltip-ontop(href='#', title='Google Plus')
+                  i.icons.icon-gplus
+              li.youtube
+                a.tooltip-ontop(href='#', title='Youtube')
+                  i.icons.icon-youtube-1
+              li.flickr
+                a.tooltip-ontop(href='#', title='Flickr')
+                  i.icons.icon-flickr-4
+              li.email
+                a.tooltip-ontop(href='#', title='Email')
+                  i.icons.icon-mail
+          // Upcoming Events
+          .sidebar-box.white.animate-onscroll
+            h3 新闻动态
+            ul.upcoming-events
+              // Event
+              li
+                .date
+                  span
+                    span.day 25
+                    span.month DEC
+                .event-content
+                  h6
+                    a(href='event-post-v2.html') Sed in lacus ut enim
+                  ul.event-meta
+                    li
+                      i.icons.icon-clock
+                      |  4:00 pm - 6:00 pm
+                    li
+                      i.icons.icon-location
+                      |  340 W 50th St.New York
+              // /Event
+              // Event
+              li
+                .date
+                  span
+                    span.day 5
+                    span.month JAN
+                .event-content
+                  h6
+                    a(href='event-post-v2.html') Sed in lacus ut enim
+                  ul.event-meta
+                    li
+                      i.icons.icon-clock
+                      |  4:00 pm - 6:00 pm
+                    li
+                      i.icons.icon-location
+                      |  340 W 50th St.New York
+              // /Event
+              // Event
+              li
+                .date
+                  span
+                    span.day 8
+                    span.month JAN
+                .event-content
+                  h6
+                    a(href='event-post-v2.html') Sed in lacus ut enim
+                  ul.event-meta
+                    li
+                      i.icons.icon-clock
+                      |  4:00 pm - 6:00 pm
+                    li
+                      i.icons.icon-location
+                      |  340 W 50th St.New York
+              // /Event
+            a.button.transparent.button-arrow(href='news.html') 更多...
+          .sidebar-box.category-box.white.animate-onscroll
+            h3 最新公告
+            ul
+              li
+                a(href='#') Clothing
+              li
+                a(href='#') Music
+              li
+                a(href='#') Posters
+            a.button.transparent.button-arrow(href='inform.html') 更多...
+          // /Upcoming Events
+          // Image Banner
+          // /Flickr Photos
+        // /Sidebar
+  // /Section
