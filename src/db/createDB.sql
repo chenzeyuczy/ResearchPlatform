@@ -12,6 +12,7 @@ create table users (
 );
 create table project (
 	pj_id int NOT NULL auto_increment,
+    pr_type varchar(255) NOT NULL,
 	pj_name varchar(255) NOT NULL,
     pj_intro text,
     pj_progress text,
