@@ -186,9 +186,8 @@ router.get('/register', function(req, res, next) {
 
 router.post('/register', function(req, res, next) {
 	var connection = mysql.createConnection(db_config);
-  var sql = 'SELECT * FROM `users` WHERE username = ' + req.body.username;
-  connection.connect();
-  connection.query(sql, function(err, rows, fields) {
+  connection.query('SELECT * FROM `users` WHERE username = ?',
+    [req.body.username], function(err, rows, fields) {
     if (err) throw err;
     if (rows.length == 0 && req.body.password.length >= 4) {
       connection.query('INSERT INTO `users` VALUES (?,?,?)',
@@ -199,14 +198,14 @@ router.post('/register', function(req, res, next) {
       console.log('User [' + req.body.username + '] fail to register.');
     }
   });
-  connection.end();
 	res.redirect('index');
 });
 
+// TODO
 router.post('/login',
   passport.authenticate('local',  {
     successRedirect: '/',
-    failureRedirect: '/login'
+    failureRedirect: '/'
   })
 );
 
