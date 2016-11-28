@@ -207,8 +207,8 @@ router.post('/login',
   passport.authenticate('local',  {
     successRedirect: '/',
     failureRedirect: '/login'
-  });
-});
+  })
+);
 
 router.get('/logout', function(req, res, next) {
   req.logout();
