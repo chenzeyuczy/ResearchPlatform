@@ -6,20 +6,22 @@ header#header.animate-onscroll
       .row
         // Logo
         #logo.col-lg-3.col-md-3.col-sm-3
-          a(href='main-v1.html')
-            img(src='img/logo.png', alt='Logo')
+          a(href='/index')
+            img(src='/img/logo.png', alt='Logo')
         // /Logo
         // Main Quote
         .col-lg-5.col-md-4.col-sm-4
-          blockquote
-            | Nam elit agna,enderit sit amet, tinciunt ac, viverra sed, nulla..
+          h3
+            | 重要热带病传播入侵媒介及病原体生物学特性研究平台
+            br
+            | Key Research Platform
         // /Main Quote
         // Newsletter
         .col-lg-4.col-md-5.col-sm-5
-          form#newsletter(action='php/newsletter-form.php', method='POST')
+          form#newsletter(action='/php/newsletter-form.php', method='POST')
             h5
               strong
-                a(href='signUp.html')
+                a(href='/register')
                   u Sign up
               |  for email updates
             .newsletter-form
@@ -59,7 +61,7 @@ header#header.animate-onscroll
         li
           a(href='/conference') 学术交流
         li
-          a(href='/tool') 数据工具
+          a(href='/data_tool') 数据工具
         li.donate-button
           a(href='/contact') 联系我们
   // /Lower Header
