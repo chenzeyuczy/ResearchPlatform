@@ -115,7 +115,25 @@ router.get('/notification/:nt_id', function(req, res, next) {
 
 /* Conference page */
 router.get('/conference', function(req, res, next) {
-	res.render('main', {content_type: 'Conference', content_type_cn: '学术交流'});
+	var result = new Object();
+	var connection = mysql.createConnection(db_config);
+	var sql = 'SELECT cf_id AS id, cf_title AS title, EXTRACT(year FROM cf_date) AS year FROM conference ORDER BY cf_date;';
+	connection.connect();
+	connection.query(sql, function(err, rows, fields) {
+		if (err) throw err;
+		for (var i = 0; i < rows.length; i++) {
+			var year = rows[i].year;
+			if (! (year in result)) {
+				result[year] = [];
+			}
+			result[year].push({'title': rows[i].title, 'link': '/conference/' + rows[i].id});
+		}
+		console.log('Number of matched query: ', rows.length);
+		console.log(result);
+		res.render('conference', {content_type: 'Conference', content_type_cn: '学术交流', list_items: result});
+	});
+	connection.end();
+	// res.render('main', {content_type: 'Conference', content_type_cn: '学术交流'});
 });
 
 router.get('/conference/:cf:id', function(req, res, next) {
@@ -142,7 +160,6 @@ router.get('/article', function(req, res, next) {
 
 /* Data_tool page */
 router.get('/data_tool', function(req, res, next) {
-	var result = [];
 	var connection = mysql.createConnection(db_config);
 	var sql = 'SELECT dt_title AS title, dt_link AS link, dt_type AS type FROM data_tool;';
 	connection.connect();
