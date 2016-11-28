@@ -126,7 +126,7 @@ router.get('/conference/:cf:id', function(req, res, next) {
 router.get('/article', function(req, res, next) {
 	var result = [];
 	var connection = mysql.createConnection(db_config);
-	var sql = 'SELECT ar_title AS title, ar_link AS link FROM article;';
+	var sql = 'SELECT ar_title AS title, ar_link AS link, extract(year from ar_date) AS ar_year FROM article ORDER BY ar_date;';
 	connection.connect();
 	connection.query(sql, function(err, rows, fields) {
 		if (err) throw err;
@@ -142,11 +142,44 @@ router.get('/article', function(req, res, next) {
 
 /* Data_tool page */
 router.get('/data_tool', function(req, res, next) {
-	res.render('main', {content_type: 'Data&Tool', content_type_cn: '数据工具'});
-});
-
-router.get('/data_tool/:dt_id', function(req, res, next) {
-	res.render('main', {content_type: 'Data&Tool', content_type_cn: '数据工具', title: req.params['dt_id']});
+	var result = [];
+	var connection = mysql.createConnection(db_config);
+	var sql = 'SELECT dt_title AS title, dt_link AS link, dt_type AS type FROM data_tool;';
+	connection.connect();
+	connection.query(sql, function(err, rows, fields) {
+		if (err) throw err;
+		var src_data = [];
+		var share_data = [];
+		var public_data = [];
+		var tools = [];
+		for (i = 0; i < rows.length; i++) {
+			switch (rows[i].type) {
+				case 0:
+					src_data.push({'title': rows[i].title, 'link': rows[i].link});
+					break;
+				case 1:
+					share_data.push({'title': rows[i].title, 'link': rows[i].link});
+					break;
+				case 2:
+					public_data.push({'title': rows[i].title, 'link': rows[i].link});
+					break;
+				case 3:
+					tools.push({'title': rows[i].title, 'link': rows[i].link});
+					break;
+			}
+		}
+		console.log('Number of matched query: ', rows.length);
+		console.log(src_data);
+		console.log(share_data);
+		console.log(public_data);
+		console.log(tools);
+		res.render('data_tool', {
+			content_type: 'Data&Tool', content_type_cn: '数据工具',
+			'src_data': src_data, 'share_data': share_data,
+			'public_data': public_data, 'tools': tools
+		});
+	});
+	connection.end();
 });
 
 /* User page */

@@ -82,7 +82,7 @@ CREATE TABLE `data_tool` (
   `dt_link` varchar(255) NOT NULL,
   `dt_content` text,
   PRIMARY KEY (`dt_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,7 +91,7 @@ CREATE TABLE `data_tool` (
 
 LOCK TABLES `data_tool` WRITE;
 /*!40000 ALTER TABLE `data_tool` DISABLE KEYS */;
-INSERT INTO `data_tool` VALUES (1,'工具1',1,'http://sdcs.sysu.edu.cn/','数据工具1'),(2,'工具2',2,'http://sdcs.sysu.edu.cn/','数据工具2'),(3,'工具3',3,'http://sdcs.sysu.edu.cn/','数据工具3'),(4,'工具4',2,'http://sdcs.sysu.edu.cn/','数据工具4'),(5,'工具5',1,'http://sdcs.sysu.edu.cn/','数据工具5');
+INSERT INTO `data_tool` VALUES (1,'相关数据集1',1,'http://sdcs.sysu.edu.cn/','数据工具1'),(2,'相关数据集2',1,'http://www.sysu.edu.cn/','数据工具2'),(3,'公共数据集3',2,'http://yann.lecun.com/exdb/mnist/','数据工具3'),(4,'公共数据集4',2,'http://host.robots.ox.ac.uk/pascal/VOC/','数据工具4'),(5,'工具5',3,'http://caffe.berkeleyvision.org/','数据工具5'),(6,'工具6',3,'https://www.tensorflow.org/',NULL),(7,'工具7',3,'https://github.com/dmlc/mxnet',NULL),(8,'源数据1',0,'https://www.baidu.com',NULL),(9,'源数据2',0,'https://www.google.com',NULL);
 /*!40000 ALTER TABLE `data_tool` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -407,4 +407,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-28 20:43:41
+-- Dump completed on 2016-11-28 21:37:17
