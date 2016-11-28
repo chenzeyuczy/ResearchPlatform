@@ -82,7 +82,7 @@ CREATE TABLE `data_tool` (
   `dt_link` varchar(255) NOT NULL,
   `dt_content` text,
   PRIMARY KEY (`dt_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,7 +91,7 @@ CREATE TABLE `data_tool` (
 
 LOCK TABLES `data_tool` WRITE;
 /*!40000 ALTER TABLE `data_tool` DISABLE KEYS */;
-INSERT INTO `data_tool` VALUES (1,'工具1',1,'http://sdcs.sysu.edu.cn/','数据工具1'),(2,'工具2',2,'http://sdcs.sysu.edu.cn/','数据工具2'),(3,'工具3',3,'http://sdcs.sysu.edu.cn/','数据工具3'),(4,'工具4',2,'http://sdcs.sysu.edu.cn/','数据工具4'),(5,'工具5',1,'http://sdcs.sysu.edu.cn/','数据工具5');
+INSERT INTO `data_tool` VALUES (1,'相关数据集1',1,'http://sdcs.sysu.edu.cn/','数据工具1'),(2,'相关数据集2',1,'http://www.sysu.edu.cn/','数据工具2'),(3,'公共数据集3',2,'http://yann.lecun.com/exdb/mnist/','数据工具3'),(4,'公共数据集4',2,'http://host.robots.ox.ac.uk/pascal/VOC/','数据工具4'),(5,'工具5',3,'http://caffe.berkeleyvision.org/','数据工具5'),(6,'工具6',3,'https://www.tensorflow.org/',NULL),(7,'工具7',3,'https://github.com/dmlc/mxnet',NULL),(8,'源数据1',0,'https://www.baidu.com',NULL),(9,'源数据2',0,'https://www.google.com',NULL);
 /*!40000 ALTER TABLE `data_tool` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -183,11 +183,12 @@ DROP TABLE IF EXISTS `project`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `project` (
   `pj_id` int(11) NOT NULL AUTO_INCREMENT,
+  `pj_type` varchar(255) NOT NULL,
   `pj_name` varchar(255) NOT NULL,
   `pj_intro` text,
   `pj_progress` text,
   PRIMARY KEY (`pj_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -196,7 +197,7 @@ CREATE TABLE `project` (
 
 LOCK TABLES `project` WRITE;
 /*!40000 ALTER TABLE `project` DISABLE KEYS */;
-INSERT INTO `project` VALUES (1,'课题1','介绍1','进展1'),(2,'课题2','介绍2','进展2'),(3,'课题3','介绍3','进展3'),(4,'课题4','介绍4','进展4'),(5,'课题5','介绍5','进展5');
+INSERT INTO `project` VALUES (1,'类别一','课题1','介绍1','进展1'),(2,'类别一','课题2','介绍2','进展2'),(3,'类别二','课题3','介绍3','进展3'),(4,'类别三','课题4','介绍4','进展4'),(5,'类别三','课题5','介绍5','进展5'),(6,'类别三','课题6','介绍6','进展6');
 /*!40000 ALTER TABLE `project` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -359,7 +360,7 @@ CREATE TABLE `team_member` (
   KEY `mb_id` (`mb_id`),
   CONSTRAINT `team_member_ibfk_1` FOREIGN KEY (`tm_id`) REFERENCES `team` (`tm_id`),
   CONSTRAINT `team_member_ibfk_2` FOREIGN KEY (`mb_id`) REFERENCES `member` (`mb_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -406,4 +407,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-26 12:41:34
+-- Dump completed on 2016-11-28 21:37:17
