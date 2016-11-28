@@ -204,8 +204,7 @@ router.post('/register', function(req, res, next) {
 // TODO
 router.post('/login',
   passport.authenticate('local',  {
-    successRedirect: '/',
-    failureRedirect: '/'
+    failureRedirect: '/index'
   })
 );
 
