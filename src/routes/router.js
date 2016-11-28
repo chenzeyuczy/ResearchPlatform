@@ -186,20 +186,33 @@ router.get('/register', function(req, res, next) {
 
 router.post('/register', function(req, res, next) {
 	var connection = mysql.createConnection(db_config);
-    var sql = 'SELECT * FROM `users` WHERE username = ' + req.body.username;
-    connection.connect();
-    connection.query(sql, function(err, rows, fields) {
-      // TODO
-    });
+  var sql = 'SELECT * FROM `users` WHERE username = ' + req.body.username;
+  connection.connect();
+  connection.query(sql, function(err, rows, fields) {
+    if (err) throw err;
+    if (rows.length == 0 && req.body.password.length >= 4) {
+      connection.query('INSERT INTO `users` VALUES (?,?,?)',
+        [req.body.username, req.body.password, 0],
+        function(err, rows) { if (err) throw err; }
+      );
+    } else {
+      console.log('User [' + req.body.username + '] fail to register.');
+    }
+  });
+  connection.end();
 	res.redirect('index');
 });
 
-router.post('/login', function(req, res, next) {
-	res.redirect('index');
+router.post('/login',
+  passport.authenticate('local',  {
+    successRedirect: '/',
+    failureRedirect: '/login'
+  });
 });
 
-router.post('/logout', function(req, res, next) {
-	res.redirect('index');
+router.get('/logout', function(req, res, next) {
+  req.logout();
+  res.redirect('/index');
 });
 
 router.get('/contact', function(req, res, next) {
