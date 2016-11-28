@@ -1,7 +1,37 @@
 var express = require('express');
 var router = express.Router();
 var db_config = require('../db/db_config');
-var mysql = require('mysql')
+var mysql = require('mysql');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
+/* Specify local strategy for passport use */
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+	var connection = mysql.createConnection(db_config);
+    var sql = 'SELECT * FROM `users` WHERE username = ' + username;
+    connection.connect();
+    connection.query(sql, function(err, rows, fields) {
+      if (err) return done(err);
+      if (0 == rows.length)
+        return done(null, false, { message: 'username/password incorrect' });
+      if (password != rows[0].passwd)
+        return done(null, false, { message: 'username/password incorrect' });
+      return done(null, rows[0], { message: 'successfully authenticated' });
+    });
+    connection.end();
+  }
+));
+
+/* Serialization & de-Serialization */
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, {username: user.username, type: user.type});
+});
+
 
 /* Index page */
 router.get('/', function(req, res, next) {
@@ -155,6 +185,12 @@ router.get('/register', function(req, res, next) {
 });
 
 router.post('/register', function(req, res, next) {
+	var connection = mysql.createConnection(db_config);
+    var sql = 'SELECT * FROM `users` WHERE username = ' + req.body.username;
+    connection.connect();
+    connection.query(sql, function(err, rows, fields) {
+      // TODO
+    });
 	res.redirect('index');
 });
 
