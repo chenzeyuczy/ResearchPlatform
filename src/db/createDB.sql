@@ -78,7 +78,7 @@ create table project_team (
     PRIMARY KEY (pj_tm_id),
     FOREIGN KEY (pj_id) REFERENCES project(pj_id),
     FOREIGN KEY (tm_id) REFERENCES team(tm_id),
-    CONSTRAINT pj_tm UNIQUE (pr_id, tm_id)
+    CONSTRAINT pj_tm UNIQUE (pj_id, tm_id)
 );
 create table project_article (
     pj_ar_id int auto_increment,
