@@ -1,27 +1,18 @@
 // User_Status
-.col-lg-4.col-md-5.col-sm-5
-  - var user_login = false
+.user-state-div
+  - var user_login = true
   if user_login
-    table
-      tr
-        td 
-          strong Username
-        td
-          a(href='/index.html') Exit
-        td
-          a(href='/index.html') Manage Pages
+    a(href='/index.html') Username
+    <br>
+    a(href='/index.html') Manage Pages
+    <br>
+    a(href='/index.html') Exit
   else
-    form#newsletter(action='/php/newsletter-form.php', method='POST')
-      h5#newsletter-header
-        strong
-          a(href='/register')
-            u 注册
-        |  以登陆研究平台
-      .newsletter-form
-        .newsletter-email
-          input#newsletter-input-username(type='text', name='username', placeholder='请输入账号')
-        .newsletter-zip
-          input#newsletter-input-password(type='text', name='password', placeholder='请输入密码')
-        .newsletter-submit
-          input(type='submit', value='')
-          i.icons.icon-right-thin
+    a(href='/register')
+      u 注册
+    |  以登陆研究平台
+    //- .newsletter-form
+    input(type='text', name='username', placeholder='请输入账号')
+    input(type='password', name='password', placeholder='请输入密码')
+    input(type='submit', value='submit')
+
