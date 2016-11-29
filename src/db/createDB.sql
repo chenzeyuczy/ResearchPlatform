@@ -12,7 +12,7 @@ create table users (
 );
 create table project (
 	pj_id int NOT NULL auto_increment,
-    pr_type varchar(255) NOT NULL,
+    pj_type varchar(255) NOT NULL,
 	pj_name varchar(255) NOT NULL,
     pj_intro text,
     pj_progress text,
@@ -73,10 +73,10 @@ create table article (
 
 create table project_team (
     pj_tm_id int auto_increment,
-	pr_id int NOT NULL,
+	pj_id int NOT NULL,
     tm_id int NOT NULL,
     PRIMARY KEY (pj_tm_id),
-    FOREIGN KEY (pr_id) REFERENCES project(pj_id),
+    FOREIGN KEY (pj_id) REFERENCES project(pj_id),
     FOREIGN KEY (tm_id) REFERENCES team(tm_id),
     CONSTRAINT pj_tm UNIQUE (pr_id, tm_id)
 );
@@ -84,7 +84,7 @@ create table project_article (
     pj_ar_id int auto_increment,
 	pj_id int NOT NULL,
     ar_id int NOT NULL,
-    pr_ar_type int NOT NULL DEFAULT 0,
+    pj_ar_type int NOT NULL DEFAULT 0,
     PRIMARY KEY (pj_ar_id),
     FOREIGN KEY (pj_id) REFERENCES project(pj_id),
     FOREIGN KEY (ar_id) REFERENCES article(ar_id),
