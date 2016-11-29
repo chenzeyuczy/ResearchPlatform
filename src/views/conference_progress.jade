@@ -8,11 +8,15 @@ block content
       .row
         .col-lg-9.col-md-9.col-sm-8.col-lg-push-3.col-md-push-3.col-sm-push-4
           h3.animate-onscroll.no-margin-top
-            i #{content.title}
+            if content
+              i #{content.title}
+            else
+              i 学术会议
           .tab
             img.align-right.animate-onscroll(src='/img/about2.jpg', alt='')
-            p.animate-onscroll(style='margin-top:0px')
-              | #{content.detail}
+            if content
+              p.animate-onscroll(style='margin-top:0px')
+                | #{content.detail}
             p.animate-onscroll
               | Ut tellus dolor, dapibus eget, elementum vel, cursus eleifend, elit. Aenean auctor wisi et urna. Aliquam erat volutpat. Duis ac turpis. Donec sit amet eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Mauris fermentum dictum magna. Sed laoreet aliquam leo. Ut tellus dolor.
             p.animate-onscroll
@@ -21,7 +25,7 @@ block content
               | Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet,nsectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat.
         // Sidebar
         .col-lg-3.col-md-3.col-sm-4.col-lg-pull-9.col-md-pull-9.col-sm-pull-8.sidebar
-          h3(style='margin-top:0') 年份
+          h3(style='margin-top:0') 列表
           // Accordions
           ul.accordions
             for items, catogory in list_items

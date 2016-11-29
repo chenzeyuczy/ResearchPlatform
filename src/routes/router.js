@@ -81,7 +81,7 @@ router.get('/progress/:pj_id', function(req, res, next) {
 		console.log('Number of matched query: ', rows[0].length);
 		console.log(result);
 		console.log(content);
-		res.render('conference', {content_type: 'Progress', content_type_cn: '项目进展', list_items: result, content: content});
+		res.render('conference_progress', {content_type: 'Progress', content_type_cn: '项目进展', list_items: result, content: content});
 	});
 	connection.end();
 });
@@ -191,7 +191,7 @@ router.get('/conference', function(req, res, next) {
 		}
 		console.log('Number of matched query: ', rows.length);
 		console.log(result);
-		res.render('conference', {content_type: 'Conference', content_type_cn: '学术交流', list_items: result});
+		res.render('conference_progress', {content_type: 'Conference', content_type_cn: '学术交流', list_items: result});
 	});
 	connection.end();
 });
@@ -219,7 +219,7 @@ router.get('/conference/:cf_id', function(req, res, next) {
 		console.log('Number of matched query: ', rows[0].length);
 		console.log(result);
 		console.log(content);
-		res.render('conference', {content_type: 'Conference', content_type_cn: '学术交流', list_items: result, content: content});
+		res.render('conference_progress', {content_type: 'Conference', content_type_cn: '学术交流', list_items: result, content: content});
 	});
 	connection.end();
 });
