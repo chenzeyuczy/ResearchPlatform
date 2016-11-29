@@ -165,20 +165,55 @@ router.get('/team', function(req, res, next) {
 
 router.get('/team/:tm_id', function(req, res, next) {
   var connection = mysql.createConnection(db_config);
-  var sql = 'SELECT * FROM `team` WHERE tm_id = ' + req.params['tm_id'];
+  var sql = 'SELECT * FROM `team` WHERE tm_id = ' + req.params['tm_id'] + ';';
+  sql += 'SELECT ar_title, ar_link FROM `article` WHERE article.ar_id IN ';
+  sql += '(SELECT ar_id FROM `team_article` WHERE tm_id = ' + req.params['tm_id'] + ');';
   connection.query(sql, function(err, rows, fields) {
     if (err) throw err;
-    // TODO: rendering
-    res.render('team_member', {
-      content_type: 'Research Teams',
-      content_type_cn: '研究团队',
-      team: {
-        team_name: rows[0].tm_name,
-        team_focus: rows[0].tm_focus,
-        team_work: rows[0].tm_work
-      }
+    var current_team = {
+      team_name: rows[0][0].tm_name,
+      team_focus: rows[0][0].tm_focus,
+      team_work: rows[0][0].tm_work,
+      team_article_list: rows[1]
+    };
+    var teams = [];
+    connection.query('SELECT * FROM `team`;', function(err, rows, fields) {
+        if (err) throw err;
+        for (i = 0; i < rows.length; i++) {
+            teams.push({
+                team_id: rows[i].tm_id,
+                team_link: '/team/' + rows[i].tm_id,
+                team_name: rows[i].tm_name,
+                team_focus: rows[i].tm_focus,
+                team_work: rows[i].tm_work,
+                team_members: []
+            });
+        }
+        async.each(teams, function(team, callback) {
+            var sql = 'SELECT mb_id, mb_name FROM `member` WHERE member.mb_id IN ';
+            sql += '(SELECT mb_id FROM `team_member` WHERE team_member.tm_id = ' + team.team_id + ');'
+            connection.query(sql, function(err, rows, fields) {
+                if (err) callback(err);
+                for (i = 0; i < rows.length; i++) {
+                    team.team_members.push({
+                        member_link: '/member/' + rows[i].mb_id,
+                        member_name: rows[i].mb_name
+                    });
+                }
+                callback();
+            });
+        }, function(err) {
+              if (err) throw err;
+              res.render('team_member', {
+                content_type: 'Research Teams',
+                content_type_cn: '研究团队',
+                main_team: teams[0],
+                other_teams: teams.slice(1),
+                show_detail_team: true,
+                current_team: current_team
+              });
+        });
     });
-    //res.json(rows);
   });
 });
 
@@ -188,18 +223,50 @@ router.get('/member/:mb_id', function(req, res, next) {
   var sql = 'SELECT * FROM `member` WHERE mb_id = ' + req.params['mb_id'];
   connection.query(sql, function(err, rows, fields) {
     if (err) throw err;
-    // TODO: rendering
-    res.render('team_member', {
-      content_type: 'Researchers',
-      content_type_cn: '团队成员',
-      member: {
+    var current_member = {
         member_name: rows[0].mb_name,
         member_focus: rows[0].mb_focus,
         member_intro: rows[0].mb_intro,
         member_work: rows[0].mb_work
       }
+    var teams = [];
+    connection.query('SELECT * FROM `team`;', function(err, rows, fields) {
+        if (err) throw err;
+        for (i = 0; i < rows.length; i++) {
+            teams.push({
+                team_id: rows[i].tm_id,
+                team_link: '/team/' + rows[i].tm_id,
+                team_name: rows[i].tm_name,
+                team_focus: rows[i].tm_focus,
+                team_work: rows[i].tm_work,
+                team_members: []
+            });
+        }
+        async.each(teams, function(team, callback) {
+            var sql = 'SELECT mb_id, mb_name FROM `member` WHERE member.mb_id IN ';
+            sql += '(SELECT mb_id FROM `team_member` WHERE team_member.tm_id = ' + team.team_id + ');'
+            connection.query(sql, function(err, rows, fields) {
+                if (err) callback(err);
+                for (i = 0; i < rows.length; i++) {
+                    team.team_members.push({
+                        member_link: '/member/' + rows[i].mb_id,
+                        member_name: rows[i].mb_name
+                    });
+                }
+                callback();
+            });
+        }, function(err) {
+              if (err) throw err;
+              res.render('team_member', {
+                content_type: 'Research Teams',
+                content_type_cn: '研究团队',
+                main_team: teams[0],
+                other_teams: teams.slice(1),
+                show_detail_team: false,
+                current_member: current_member
+              });
+        });
     });
-    //res.json(rows);
   });
 });
 
