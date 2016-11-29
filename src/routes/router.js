@@ -36,11 +36,54 @@ router.get('/project', function(req, res, next) {
 });
 
 router.get('/project/:pj_id', function(req, res, next) {
-	res.render('project', {content_type: 'Project', content_type_cn: '课题项目', title: req.params['pj_id']});
+	var result = new Object();
+	var connection = mysql.createConnection(db_config);
+	var sql = 'SELECT pj_id AS id, pj_name AS title, pj_type AS type FROM project ORDER BY pj_type;';
+	sql += 'SELECT pj_intro AS intro, pj_progress FROM project WHERE pj_id=' + req.params['pj_id'] + ';';
+	connection.connect();
+	connection.query(sql, function(err, rows, fields) {
+		if (err) throw err;
+		for (var i = 0; i < rows[0].length; i++) {
+			var type = rows[0][i].type;
+			if (! (type in result)) {
+				result[type] = [];
+			}
+			result[type].push({'title': rows[0][i].title, 'link': '/project/' + rows[0][i].id});
+		}
+		console.log('Number of matched query: ', rows[0].length);
+		console.log(rows);
+		res.render('project', {content_type: 'Project', content_type_cn: '课题项目', list_items: result});
+	});
+	connection.end();
+	// res.render('project', {content_type: 'Project', content_type_cn: '课题项目', title: req.params['pj_id']});
 });
 
 router.get('/progress/:pj_id', function(req, res, next) {
-	res.render('project', {content_type: 'Progress', content_type_cn: '项目进展', title: req.params['pj_id']});
+	var result = new Object();
+	var content = new Object();
+	var connection = mysql.createConnection(db_config);
+	var sql = 'SELECT pj_id AS id, pj_name AS title, pj_type AS type FROM project ORDER BY pj_type;';
+	sql += 'SELECT pj_name AS title, pj_progress AS progress FROM project WHERE pj_id=' + req.params['pj_id'] + ';';
+	connection.connect();
+	connection.query(sql, function(err, rows, fields) {
+		if (err) throw err;
+		for (var i = 0; i < rows[0].length; i++) {
+			var type = rows[0][i].type;
+			if (! (type in result)) {
+				result[type] = [];
+			}
+			result[type].push({'title': rows[0][i].title, 'link': '/project/' + rows[0][i].id});
+		}
+		if (rows[1].length > 0) {
+			content.title = rows[1][0].title;
+			content.detail = rows[1][0].progress;
+		}
+		console.log('Number of matched query: ', rows[0].length);
+		console.log(result);
+		console.log(content);
+		res.render('conference', {content_type: 'Progress', content_type_cn: '项目进展', list_items: result, content: content});
+	});
+	connection.end();
 });
 
 /* Team page */
@@ -153,8 +196,32 @@ router.get('/conference', function(req, res, next) {
 	connection.end();
 });
 
-router.get('/conference/:cf:id', function(req, res, next) {
-	res.render('main', {content_type: 'Conference', content_type_cn: '学术交流', title: req.params['cf_id']});
+router.get('/conference/:cf_id', function(req, res, next) {
+	var result = new Object();
+	var content = new Object();
+	var connection = mysql.createConnection(db_config);
+	var sql = 'SELECT cf_id AS id, cf_title AS title, EXTRACT(year FROM cf_date) AS year FROM conference ORDER BY cf_date;';
+	sql += 'SELECT cf_title AS title, cf_content AS content FROM conference WHERE cf_id=' + req.params['cf_id'] + ';';
+	connection.connect();
+	connection.query(sql, function(err, rows, fields) {
+		if (err) throw err;
+		for (var i = 0; i < rows[0].length; i++) {
+			var year = rows[0][i].year;
+			if (! (year in result)) {
+				result[year] = [];
+			}
+			result[year].push({'title': rows[0][i].title, 'link': '/conference/' + rows[0][i].id});
+		}
+		if (rows[1].length > 0) {
+			content.title = rows[1][0].title;
+			content.detail = rows[1][0].content;
+		}
+		console.log('Number of matched query: ', rows[0].length);
+		console.log(result);
+		console.log(content);
+		res.render('conference', {content_type: 'Conference', content_type_cn: '学术交流', list_items: result, content: content});
+	});
+	connection.end();
 });
 
 /* Article page */

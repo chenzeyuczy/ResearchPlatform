@@ -8,10 +8,12 @@ block content
       .row
         .col-lg-9.col-md-9.col-sm-8.col-lg-push-3.col-md-push-3.col-sm-push-4
           h3.animate-onscroll.no-margin-top
-            i 会议介绍
+            i #{content.title}
           .tab
-            img.align-right.animate-onscroll(src='img/about2.jpg', alt='')
+            img.align-right.animate-onscroll(src='/img/about2.jpg', alt='')
             p.animate-onscroll(style='margin-top:0px')
+              | #{content.detail}
+            p.animate-onscroll
               | Ut tellus dolor, dapibus eget, elementum vel, cursus eleifend, elit. Aenean auctor wisi et urna. Aliquam erat volutpat. Duis ac turpis. Donec sit amet eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Mauris fermentum dictum magna. Sed laoreet aliquam leo. Ut tellus dolor.
             p.animate-onscroll
               | Sed laoreet aliquam leo. Ut tellus dolor, dapibus eget, elementum vel, cursus eleifend, elit. Aenean auctor wisi et urna. Aliquam erat volutpat. Duis ac turpis. Integer rutrum ante eu lacus. Vestibulum libero nisl, porta vel, scelerisque eget, malesuada at, neque. Vivamus eget nibh. Etiam cursus leo vel metus. Ut tellus dolor, dapibus eget, elementum vel, cursus eleifend, elit.
@@ -22,17 +24,17 @@ block content
           h3(style='margin-top:0') 年份
           // Accordions
           ul.accordions
-            for confs, year in list_items
+            for items, catogory in list_items
               // Accordion
               li.accordion
                 .accordion-header
                   .accordion-icon
-                  h6 #{year}
+                  h6 #{catogory}
                 .accordion-content
                   ul.list.finger-list
-                    for conf in confs
+                    for item in items
                       li
-                        a(href=conf.link) #{conf.title}
+                        a(href=item.link) #{item.title}
               // /Accordion
           .social-media.animate-onscroll
             span.small-caption Get connected:

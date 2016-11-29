@@ -1,6 +1,7 @@
-// Newsletter
+// User_Status
 .col-lg-4.col-md-5.col-sm-5
-  if user.login
+  - var user_login = false
+  if user_login
     table
       tr
         td 
@@ -24,5 +25,3 @@
         .newsletter-submit
           input(type='submit', value='')
           i.icons.icon-right-thin
-// /Newsletter
-
