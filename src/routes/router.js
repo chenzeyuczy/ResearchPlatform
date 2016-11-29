@@ -4,6 +4,7 @@ var db_config = require('../db/db_config');
 var mysql = require('mysql');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var async = require('async');
 
 /* Specify local strategy for passport use */
 passport.use(new LocalStrategy(
@@ -57,16 +58,63 @@ router.get('/progress/:pj_id', function(req, res, next) {
 
 /* Team page */
 router.get('/team', function(req, res, next) {
-	res.render('main', {content_type: 'Team', content_type_cn: '研究团队'});
+    var connection = mysql.createConnection(db_config);
+    var teams = [];
+    connection.query('SELECT * FROM `team`;', function(err, rows, fields) {
+        if (err) throw err;
+        for (i = 0; i < rows.length; i++) {
+            teams.push({
+                team_id: rows[i].tm_id,
+                team_name: rows[i].tm_name,
+                team_focus: rows[i].tm_focus,
+                team_work: rows[i].tm_work,
+                team_member: []
+            });
+        }
+        async.each(teams, function(team, callback) {
+            var sql = 'SELECT mb_id, mb_name FROM `member` WHERE member.mb_id IN ';
+            sql += '(SELECT mb_id FROM `team_member` WHERE team_member.tm_id = ' + team.team_id + ');'
+            connection.query(sql, function(err, rows, fields) {
+                if (err) callback(err);
+                for (i = 0; i < rows.length; i++) {
+                    team.team_member.push({
+                        member_link: '/member/' + rows[i].mb_id,
+                        member_name: rows[i].mb_name
+                    });
+                }
+                callback();
+            });
+        }, function(err) {
+              if (err) throw err;
+              // TODO: rendering
+              res.json({
+                  content_type: 'Team',
+                  content_type_cn: '研究团队',
+                  list_teams: teams
+              });
+          });
+    });
 });
 
 router.get('/team/:tm_id', function(req, res, next) {
-	res.render('main', {content_type: 'Team', content_type_cn: '研究团队', title: req.params['tm_id']});
+  var connection = mysql.createConnection(db_config);
+  var sql = 'SELECT * FROM `team` WHERE tm_id = ' + req.params['tm_id'];
+  connection.query(sql, function(err, rows, fields) {
+    if (err) throw err;
+    // TODO: rendering
+    res.json(rows);
+  });
 });
 
 /* Member page */
 router.get('/member/:mb_id', function(req, res, next) {
-	res.render('main', {content_type: 'Member', content_type_cn: '成员信息', title: req.params['mb_id']});
+  var connection = mysql.createConnection(db_config);
+  var sql = 'SELECT * FROM `member` WHERE mb_id = ' + req.params['mb_id'];
+  connection.query(sql, function(err, rows, fields) {
+    if (err) throw err;
+    // TODO: rendering
+    res.json(rows);
+  });
 });
 
 /* News page */
