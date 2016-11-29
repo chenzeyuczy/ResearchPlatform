@@ -157,7 +157,8 @@ router.get('/team', function(req, res, next) {
                 content_type: 'Research Teams',
                 content_type_cn: '研究团队',
                 main_team: teams[0],
-                other_teams: teams.slice(1)
+                other_teams: teams.slice(1),
+                show_detail: false
               });
           });
     });
@@ -209,8 +210,9 @@ router.get('/team/:tm_id', function(req, res, next) {
                 content_type_cn: '研究团队',
                 main_team: teams[0],
                 other_teams: teams.slice(1),
-                show_detail_team: true,
-                current_team: current_team
+                current_team: current_team,
+                show_detail: true,
+                show_team: true
               });
         });
     });
@@ -262,8 +264,9 @@ router.get('/member/:mb_id', function(req, res, next) {
                 content_type_cn: '研究团队',
                 main_team: teams[0],
                 other_teams: teams.slice(1),
-                show_detail_team: false,
-                current_member: current_member
+                current_member: current_member,
+                show_detail: true,
+                show_team: false
               });
         });
     });

@@ -5,9 +5,10 @@ block content
     include content_header.jade
     // Section
     section.section.full-width-bg.gray-bg
+      if show_detail
       .row
         .col-lg-9.col-md-9.col-sm-8.col-lg-push-3.col-md-push-3.col-sm-push-4
-          if show_detail_team
+          if show_team
             h3.animate-onscroll.no-margin-top #{current_team.team_name}
             #teamInfo.tab
               table.project-details
@@ -30,6 +31,7 @@ block content
                         li
                           a(href=article.ar_link) #{article.ar_title}
           else
+
             h3.animate-onscroll.no-margin-top #{current_member.member_name}
             #memberInfo.tab
               table.project-details
