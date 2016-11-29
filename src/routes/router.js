@@ -32,15 +32,18 @@ router.get('/project', function(req, res, next) {
 		res.render('project', {content_type: 'Project', content_type_cn: '课题项目', list_items: result});
 	});
 	connection.end();
-	// res.render('main', {content_type: 'Project', content_type_cn: '课题项目'});
 });
 
 router.get('/project/:pj_id', function(req, res, next) {
 	var result = new Object();
 	var project = new Object();
+	var dataset = new Object();
 	var connection = mysql.createConnection(db_config);
 	var sql = 'SELECT pj_id AS id, pj_name AS title, pj_type AS type FROM project ORDER BY pj_type;';
 	sql += 'SELECT pj_intro AS intro, pj_progress AS progress FROM project WHERE pj_id=' + req.params['pj_id'] + ';';
+	sql += 'SELECT dt_id AS id, dt_title AS title FROM data_tool WHERE dt_id IN (SELECT dt_id FROM project_data_tool WHERE pj_id=' + req.params['pj_id'] + ') AND dt_type=1;';
+	sql += 'SELECT ar_title AS title, ar_link AS link FROM article WHERE ar_id IN (SELECT ar_id FROM project_article WHERE pj_id=' + req.params['pj_id'] + ' AND pj_ar_type=0);';
+	sql += 'SELECT ar_title AS title, ar_link AS link FROM article WHERE ar_id IN (SELECT ar_id FROM project_article WHERE pj_id=' + req.params['pj_id'] + ' AND pj_ar_type=1);';
 	connection.connect();
 	connection.query(sql, function(err, rows, fields) {
 		if (err) throw err;
@@ -54,13 +57,37 @@ router.get('/project/:pj_id', function(req, res, next) {
 		if (rows[1].length > 0) {
 			project = rows[1][0];
 			project.link = '/progress/' + req.params['pj_id'];
+			project.progress = project.progress.slice(0, 100);
+		}
+		console.log('Dataset number: ', rows[2].length);
+		if (rows[2].length > 0) {
+			project.dataset = [];
+			for (var i = 0; i < rows[2].length; i++) {
+				dataset.title = rows[2][i].title;
+				dataset.link = '/data_tool#data_tool_' + rows[2][i].id;
+				console.log(dataset);
+				project.dataset.push(dataset);
+			}
+			console.log(project.dataset);
+		}
+		console.log('Article published:', rows[3]);
+		if (rows[3].length > 0) {
+			project.ar_publish = [];
+			for (var i = 0; i < rows[3].length; i++){
+				project.ar_publish.push({'title': rows[3][i].title, 'link': rows[3][i].link});
+			}
+		}
+		console.log('Article related:', rows[4]);
+		if (rows[4].length > 0) {
+			project.ar_related = [];
+			for (var i = 0; i < rows[4].length; i++){
+				project.ar_related.push({'title': rows[4][i].title, 'link': rows[4][i].link});
+			}
 		}
 		console.log('Number of matched query: ', rows[0].length);
-		console.log(project);
 		res.render('project', {content_type: 'Project', content_type_cn: '课题项目', list_items: result, project: project});
 	});
 	connection.end();
-	// res.render('project', {content_type: 'Project', content_type_cn: '课题项目', title: req.params['pj_id']});
 });
 
 router.get('/progress/:pj_id', function(req, res, next) {
@@ -280,7 +307,7 @@ router.get('/article/:tm_id', function(req, res, next) {
 /* Data_tool page */
 router.get('/data_tool', function(req, res, next) {
 	var connection = mysql.createConnection(db_config);
-	var sql = 'SELECT dt_title AS title, dt_link AS link, dt_type AS type FROM data_tool;';
+	var sql = 'SELECT dt_id AS id, dt_title AS title, dt_link AS link, dt_type AS type FROM data_tool;';
 	connection.connect();
 	connection.query(sql, function(err, rows, fields) {
 		if (err) throw err;
@@ -291,16 +318,16 @@ router.get('/data_tool', function(req, res, next) {
 		for (i = 0; i < rows.length; i++) {
 			switch (rows[i].type) {
 				case 0:
-					src_data.push({'title': rows[i].title, 'link': rows[i].link});
+					src_data.push({'title': rows[i].title, 'link': rows[i].link, 'id': rows[i].id});
 					break;
 				case 1:
-					share_data.push({'title': rows[i].title, 'link': rows[i].link});
+					share_data.push({'title': rows[i].title, 'link': rows[i].link, 'id': rows[i].id});
 					break;
 				case 2:
-					public_data.push({'title': rows[i].title, 'link': rows[i].link});
+					public_data.push({'title': rows[i].title, 'link': rows[i].link, 'id': rows[i].id});
 					break;
 				case 3:
-					tools.push({'title': rows[i].title, 'link': rows[i].link});
+					tools.push({'title': rows[i].title, 'link': rows[i].link, 'id': rows[i].id});
 					break;
 			}
 		}

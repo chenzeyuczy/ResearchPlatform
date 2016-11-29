@@ -33,33 +33,33 @@ block content
                   td(style='width:100px', valign='top', margin='10px')
                     strong 相关数据库:
                   td
-                    a(href='#') 点击进入数据库
+                    if project.dataset
+                      each dataset in project.dataset
+                        a(href=dataset.link) #{dataset.title}
+                    else
+                      | 无
                 tr
                   td(style='width:100px', valign='top', margin='10px')
                     strong 已发表文章:
                   td
-                    ul.project-link(style='padding:0px;margin-Left:15px')
-                      li
-                        a(href='#') file:///G:/%E6%A8%A1%E6%9D%BF/mbts_13_candidate/aboutproject.html#tab1
-                      li
-                        a(href='#') file:///G:/%E6%A8%A1%E6%9D%BF/mbts_13_candidate/aboutproject.html#tab1
-                      li
-                        a(href='#') file:///G:/%E6%A8%A1%E6%9D%BF/mbts_13_candidate/aboutproject.html#tab1
-                      li
-                        a(href='#') file:///G:/%E6%A8%A1%E6%9D%BF/mbts_13_candidate/aboutproject.html#tab1
+                    if project.ar_publish
+                      ul.project-link(style='padding:0px;margin-Left:15px')
+                        each article in project.ar_publish
+                          li
+                            a(href=article.link) #{article.title}
+                    else
+                      | 无
                 tr
                   td(style='width:100px', valign='top', margin='10px')
                     strong 相关文章:
                   td
-                    ul.project-link(style='padding:0px;margin-Left:15px')
-                      li
-                        a(href='#') file:///G:/%E6%A8%A1%E6%9D%BF/mbts_13_candidate/aboutproject.html#tab1
-                      li
-                        a(href='#') file:///G:/%E6%A8%A1%E6%9D%BF/mbts_13_candidate/aboutproject.html#tab1
-                      li
-                        a(href='#') file:///G:/%E6%A8%A1%E6%9D%BF/mbts_13_candidate/aboutproject.html#tab1
-                      li
-                        a(href='#') file:///G:/%E6%A8%A1%E6%9D%BF/mbts_13_candidate/aboutproject.html#tab1
+                    if project.ar_related
+                      ul.project-link(style='padding:0px;margin-Left:15px')
+                        each article in project.ar_related
+                          li
+                            a(href=article.link) #{article.title}
+                    else
+                      | 无
 
               else
                 tr

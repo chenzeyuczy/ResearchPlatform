@@ -40,7 +40,7 @@ block content
                   td
                     ul.project-link(style='padding:0px;margin-Left:15px')
                       for item in src_data
-                        li
+                        li(id='data_tool_'+item.id)
                           a(href=item.link) #{item.title}
                 tr
                   td(style='width:100px', valign='top', margin='10px')
@@ -48,7 +48,7 @@ block content
                   td
                     ul.project-link(style='padding:0px;margin-Left:15px')
                       for item in share_data
-                        li
+                        li(id='data_tool_'+item.id)
                           a(href=item.link) #{item.title}
             #tab2.tab(style='padding-Top:0')
               table.project-details
@@ -58,7 +58,7 @@ block content
                   td
                     ul.project-link(style='padding:0px;margin-Left:15px')
                       for item in public_data
-                        li
+                        li(id='data_tool_'+item.id)
                           a(href=item.link) #{item.title}
             #tab3.tab(style='padding-Top:0')
               table.project-details
@@ -68,6 +68,6 @@ block content
                   td
                     ul.project-link(style='padding:0px;margin-Left:15px')
                       for item in tools
-                        li
+                        li(id='data_tool_'+item.id)
                           a(href=item.link) #{item.title}
     // /Section
