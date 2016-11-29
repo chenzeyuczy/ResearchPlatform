@@ -7,7 +7,7 @@ header#header.animate-onscroll
         // Logo
         #logo.col-lg-3.col-md-3.col-sm-3
           a(href='/index')
-            img(src='/img/logo.png', alt='Logo')
+            img(src='/img/logo.jpg', alt='Logo')
         // /Logo
         // Main Quote
         .col-lg-3.col-md-2.col-sm-2
@@ -19,23 +19,9 @@ header#header.animate-onscroll
           button#language-changer-button
             | CN/EN
         // /Main Quote
-        // Newsletter
-        .col-lg-4.col-md-5.col-sm-5
-          form#newsletter(action='/php/newsletter-form.php', method='POST')
-            h5#newsletter-header
-              strong
-                a(href='/register')
-                  u 注册
-              |  以登陆研究平台
-            .newsletter-form
-              .newsletter-email
-                input#newsletter-input-username(type='text', name='username', placeholder='请输入账号')
-              .newsletter-zip
-                input#newsletter-input-password(type='text', name='password', placeholder='请输入密码')
-              .newsletter-submit
-                input(type='submit', value='')
-                i.icons.icon-right-thin
-        // /Newsletter
+        include sign_in.jade
+
+
   // /Main Header
 
   // Lower Header
