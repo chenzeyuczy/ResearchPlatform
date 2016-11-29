@@ -708,8 +708,8 @@
                 }
             },
             {
-                "name": "pr_ar_type",
-                "verbose": "pr_ar_type",
+                "name": "pj_ar_type",
+                "verbose": "pj_ar_type",
                 "control": {
                     "text": true
                 },
@@ -828,8 +828,8 @@
                 }
             },
             {
-                "name": "pr_id",
-                "verbose": "pr_id",
+                "name": "pj_id",
+                "verbose": "pj_id",
                 "control": {
                     "text": true
                 },
