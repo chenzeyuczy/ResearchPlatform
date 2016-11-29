@@ -37,9 +37,10 @@ router.get('/project', function(req, res, next) {
 
 router.get('/project/:pj_id', function(req, res, next) {
 	var result = new Object();
+	var project = new Object();
 	var connection = mysql.createConnection(db_config);
 	var sql = 'SELECT pj_id AS id, pj_name AS title, pj_type AS type FROM project ORDER BY pj_type;';
-	sql += 'SELECT pj_intro AS intro, pj_progress FROM project WHERE pj_id=' + req.params['pj_id'] + ';';
+	sql += 'SELECT pj_intro AS intro, pj_progress AS progress FROM project WHERE pj_id=' + req.params['pj_id'] + ';';
 	connection.connect();
 	connection.query(sql, function(err, rows, fields) {
 		if (err) throw err;
@@ -50,9 +51,13 @@ router.get('/project/:pj_id', function(req, res, next) {
 			}
 			result[type].push({'title': rows[0][i].title, 'link': '/project/' + rows[0][i].id});
 		}
+		if (rows[1].length > 0) {
+			project = rows[1][0];
+			project.link = '/progress/' + req.params['pj_id'];
+		}
 		console.log('Number of matched query: ', rows[0].length);
-		console.log(rows);
-		res.render('project', {content_type: 'Project', content_type_cn: '课题项目', list_items: result});
+		console.log(project);
+		res.render('project', {content_type: 'Project', content_type_cn: '课题项目', list_items: result, project: project});
 	});
 	connection.end();
 	// res.render('project', {content_type: 'Project', content_type_cn: '课题项目', title: req.params['pj_id']});
