@@ -92,93 +92,32 @@ block content
                   a(href='#') 更多
         // Sidebar
         .col-lg-3.col-md-3.col-sm-4.col-lg-pull-9.col-md-pull-9.col-sm-pull-8.sidebar
-          h3(style='margin-top:0') 主要负责团队
+          h3(style='margin-top:0')
+            a(href=main_team.team_link) 主要负责团队
           // Accordions
           .tab-header
             ul
-              li
-                a(href='#tab1')
-                  h6 Section 1
-              li
-                a(href='#tab2')
-                  h6 Section 2
-              li
-                a(href='#tab3')
-                  h6 Section 3
+              for member in main_team.team_members
+                li
+                  a(href=member.member_link)
+                    h6= member.member_name
           h3(style='margin-top:20px') 参与团队
           // Accordions
           ul.accordions
             // Accordion
-            li.accordion
-              .accordion-header
-                .accordion-icon
-                h6 Section 1
-              .accordion-content
-                .tab-header
-                  ul
-                    li
-                      a(href='#tab1')
-                        h6 Section 1
-                    li
-                      a(href='#tab2')
-                        h6 Section 2
-                    li
-                      a(href='#tab3')
-                        h6 Section 3
-            // /Accordion
-            // Accordion
-            li.accordion
-              .accordion-header
-                .accordion-icon
-                h6 Section 2
-              .accordion-content
-                .tab-header
-                  ul
-                    li
-                      a(href='#tab1')
-                        h6 Section 1
-                    li
-                      a(href='#tab2')
-                        h6 Section 2
-                    li
-                      a(href='#tab3')
-                        h6 Section 3
-            // /Accordion
-            // Accordion
-            li.accordion
-              .accordion-header
-                .accordion-icon
-                h6 Section 2
-              .accordion-content
-                .tab-header
-                  ul
-                    li
-                      a(href='#tab1')
-                        h6 Section 1
-                    li
-                      a(href='#tab2')
-                        h6 Section 2
-                    li
-                      a(href='#tab3')
-                        h6 Section 3
-            // /Accordion
-            // Accordion
-            li.accordion
-              .accordion-header
-                .accordion-icon
-                h6 Section 4
-              .accordion-content
-                .tab-header
-                  ul
-                    li
-                      a(href='#tab1')
-                        h6 Section 1
-                    li
-                      a(href='#tab2')
-                        h6 Section 2
-                    li
-                      a(href='#tab3')
-                        h6 Section 3
+            for team in other_teams
+              li.accordion
+                .accordion-header
+                  .accordion-icon
+                  h6
+                    a(href=team.team_link) #{team.team_name}
+                .accordion-content
+                  .tab-header
+                    ul
+                      for member in team.team_members
+                        li
+                          a(href=member.member_link)
+                            h6= member.member_name
             // /Accordion
           .social-media.animate-onscroll
             span.small-caption Get connected:

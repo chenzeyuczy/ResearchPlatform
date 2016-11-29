@@ -126,10 +126,11 @@ router.get('/team', function(req, res, next) {
         for (i = 0; i < rows.length; i++) {
             teams.push({
                 team_id: rows[i].tm_id,
+                team_link: '/team/' + rows[i].tm_id,
                 team_name: rows[i].tm_name,
                 team_focus: rows[i].tm_focus,
                 team_work: rows[i].tm_work,
-                team_member: []
+                team_members: []
             });
         }
         async.each(teams, function(team, callback) {
@@ -138,7 +139,7 @@ router.get('/team', function(req, res, next) {
             connection.query(sql, function(err, rows, fields) {
                 if (err) callback(err);
                 for (i = 0; i < rows.length; i++) {
-                    team.team_member.push({
+                    team.team_members.push({
                         member_link: '/member/' + rows[i].mb_id,
                         member_name: rows[i].mb_name
                     });
@@ -147,11 +148,11 @@ router.get('/team', function(req, res, next) {
             });
         }, function(err) {
               if (err) throw err;
-              // TODO: rendering
-              res.json({
-                  content_type: 'Team',
-                  content_type_cn: '研究团队',
-                  list_teams: teams
+              res.render('team_member', {
+                content_type: 'Research Teams',
+                content_type_cn: '研究团队',
+                main_team: teams[0],
+                other_teams: teams.slice(1)
               });
           });
     });
@@ -163,7 +164,16 @@ router.get('/team/:tm_id', function(req, res, next) {
   connection.query(sql, function(err, rows, fields) {
     if (err) throw err;
     // TODO: rendering
-    res.json(rows);
+    res.render('team_member', {
+      content_type: 'Research Teams',
+      content_type_cn: '研究团队',
+      team: {
+        team_name: rows[0].tm_name,
+        team_focus: rows[0].tm_focus,
+        team_work: rows[0].tm_work
+      }
+    });
+    //res.json(rows);
   });
 });
 
@@ -174,7 +184,17 @@ router.get('/member/:mb_id', function(req, res, next) {
   connection.query(sql, function(err, rows, fields) {
     if (err) throw err;
     // TODO: rendering
-    res.json(rows);
+    res.render('team_member', {
+      content_type: 'Researchers',
+      content_type_cn: '团队成员',
+      member: {
+        member_name: rows[0].mb_name,
+        member_focus: rows[0].mb_focus,
+        member_intro: rows[0].mb_intro,
+        member_work: rows[0].mb_work
+      }
+    });
+    //res.json(rows);
   });
 });
 
