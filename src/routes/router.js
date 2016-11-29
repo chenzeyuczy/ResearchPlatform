@@ -14,15 +14,33 @@ router.get('/index', function(req, res, next) {
 
 /* Project page */
 router.get('/project', function(req, res, next) {
-	res.render('main', {content_type: 'Project', content_type_cn: '课题项目'});
+	var result = new Object();
+	var connection = mysql.createConnection(db_config);
+	var sql = 'SELECT pj_id AS id, pj_name AS title, pj_type AS type FROM project ORDER BY pj_type;';
+	connection.connect();
+	connection.query(sql, function(err, rows, fields) {
+		if (err) throw err;
+		for (var i = 0; i < rows.length; i++) {
+			var type = rows[i].type;
+			if (! (type in result)) {
+				result[type] = [];
+			}
+			result[type].push({'title': rows[i].title, 'link': '/project/' + rows[i].id});
+		}
+		console.log('Number of matched query: ', rows.length);
+		console.log(result);
+		res.render('project', {content_type: 'Project', content_type_cn: '课题项目', list_items: result});
+	});
+	connection.end();
+	// res.render('main', {content_type: 'Project', content_type_cn: '课题项目'});
 });
 
 router.get('/project/:pj_id', function(req, res, next) {
-	res.render('main', {content_type: 'Project', content_type_cn: '课题项目', title: req.params['pj_id']});
+	res.render('project', {content_type: 'Project', content_type_cn: '课题项目', title: req.params['pj_id']});
 });
 
 router.get('/progress/:pj_id', function(req, res, next) {
-	res.render('main', {content_type: 'Progress', content_type_cn: '项目进展', title: req.params['pj_id']});
+	res.render('project', {content_type: 'Progress', content_type_cn: '项目进展', title: req.params['pj_id']});
 });
 
 /* Team page */
@@ -133,7 +151,6 @@ router.get('/conference', function(req, res, next) {
 		res.render('conference', {content_type: 'Conference', content_type_cn: '学术交流', list_items: result});
 	});
 	connection.end();
-	// res.render('main', {content_type: 'Conference', content_type_cn: '学术交流'});
 });
 
 router.get('/conference/:cf:id', function(req, res, next) {
