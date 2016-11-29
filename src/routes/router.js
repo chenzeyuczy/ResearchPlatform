@@ -68,9 +68,10 @@ router.get('/project', function(req, res, next) {
 
 router.get('/project/:pj_id', function(req, res, next) {
 	var result = new Object();
+	var project = new Object();
 	var connection = mysql.createConnection(db_config);
 	var sql = 'SELECT pj_id AS id, pj_name AS title, pj_type AS type FROM project ORDER BY pj_type;';
-	sql += 'SELECT pj_intro AS intro, pj_progress FROM project WHERE pj_id=' + req.params['pj_id'] + ';';
+	sql += 'SELECT pj_intro AS intro, pj_progress AS progress FROM project WHERE pj_id=' + req.params['pj_id'] + ';';
 	connection.connect();
 	connection.query(sql, function(err, rows, fields) {
 		if (err) throw err;
@@ -81,9 +82,13 @@ router.get('/project/:pj_id', function(req, res, next) {
 			}
 			result[type].push({'title': rows[0][i].title, 'link': '/project/' + rows[0][i].id});
 		}
+		if (rows[1].length > 0) {
+			project = rows[1][0];
+			project.link = '/progress/' + req.params['pj_id'];
+		}
 		console.log('Number of matched query: ', rows[0].length);
-		console.log(rows);
-		res.render('project', {content_type: 'Project', content_type_cn: '课题项目', list_items: result});
+		console.log(project);
+		res.render('project', {content_type: 'Project', content_type_cn: '课题项目', list_items: result, project: project});
 	});
 	connection.end();
 	// res.render('project', {content_type: 'Project', content_type_cn: '课题项目', title: req.params['pj_id']});
@@ -324,16 +329,46 @@ router.get('/conference/:cf_id', function(req, res, next) {
 
 /* Article page */
 router.get('/article', function(req, res, next) {
-	var result = [];
+	var result = new Object();;
 	var connection = mysql.createConnection(db_config);
-	var sql = 'SELECT ar_title AS title, ar_link AS link, extract(year from ar_date) AS ar_year FROM article ORDER BY ar_date;';
+	var sql = 'SET @rank=0;';
+	sql += 'SELECT @rank:=@rank+1 AS rank, ar_title AS title, ar_link AS link, ar_author AS author, extract(year from ar_date) AS year FROM article ORDER BY ar_date;';
 	connection.connect();
 	connection.query(sql, function(err, rows, fields) {
-		if (err) throw err;
-		for (i = 0; i < rows.length; i++) {
-			result.push({'title': rows[i].title, 'link': rows[i].link});
+		if (err || rows[1].length < 1) throw err;
+		for (var i = 0; i < rows[1].length; i++) {
+			var year = rows[1][i].year;
+			if (! (year in result)) {
+				result[year] = [];
+			}
+			result[year].push({'title': rows[1][i].title, 'link': rows[1][i].link, 'rank': rows[1][i].rank, 'author': rows[1][i].author});
 		}
-		console.log('Number of matched query: ', rows.length);
+		console.log('Number of matched query: ', rows[1].length);
+		console.log(result);
+		res.render('article', {content_type: 'Article', content_type_cn: '发表文章', list_items: result});
+	});
+	connection.end();
+});
+
+router.get('/article/:tm_id', function(req, res, next) {
+	var result = new Object();;
+	var connection = mysql.createConnection(db_config);
+	var sql = 'SET @rank=0;';
+	sql += 'SELECT @rank:=@rank+1 AS rank, ar_title AS title, ar_link AS link,'
+		+ ' ar_author AS author, extract(year from ar_date) AS year FROM article'
+		+ ' WHERE ar_id IN (SELECT ar_id FROM team_article'
+		+ ' WHERE tm_id=' + req.params['tm_id'] + ') ORDER BY ar_date;';
+	connection.connect();
+	connection.query(sql, function(err, rows, fields) {
+		if (err || rows[1].length < 1) throw err;
+		for (var i = 0; i < rows[1].length; i++) {
+			var year = rows[1][i].year;
+			if (! (year in result)) {
+				result[year] = [];
+			}
+			result[year].push({'title': rows[1][i].title, 'link': rows[1][i].link, 'rank': rows[1][i].rank, 'author': rows[1][i].author});
+		}
+		console.log('Number of matched query: ', rows[1].length);
 		console.log(result);
 		res.render('article', {content_type: 'Article', content_type_cn: '发表文章', list_items: result});
 	});
