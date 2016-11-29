@@ -35,15 +35,9 @@ Start main application.
 Start administration application.
 
 	admin db/
-    
-The default ports for main application and admin application are 3000 and 3001 respectively.
-    
-### Debug Method
 
-To debug the jade template, put your jade files under `views` folder and add the following function in `routes/router.js`. Then start the main application.
-```
-router.get('/PATH_U_LIKE', function(req, res, next) {
-	res.render('NAME_OF_JADE_WITHOUT_SUFFIX');
-});
-```
-You can review your jade file in `ADDRESS:PORT/PATH_U_LIKE`.
+After that, the server is running at `http://localhost:3000`.
+    
+### Copytight
+
+All rights reserved.
