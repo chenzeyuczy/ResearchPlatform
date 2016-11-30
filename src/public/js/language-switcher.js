@@ -1,6 +1,9 @@
 ﻿$(document).ready(function(){
   var language = 0;
-  var newsletter_header_html = ['<strong><a  href="signUp.html"><u>注册</u></a></strong> 以登陆研究平台','<strong><a  href="signUp.html"><u>Sign up</u></a></strong> to login'];
+  var newsletter_header_html = ['<strong><a href="/register"><u>注册</u></a></strong> 以登陆研究平台','<strong><a href="/register"><u>Sign up</u></a></strong> to login'];
+  var newsletter_header_manage = ['<a href="/#",onclick="javascript:event.target.port=8080">管理</a>',
+                                  '<a href="/#",onclick="javascript:event.target.port=8080">Administration</a>'];
+  var newsletter_header_exit = ['<a href="/logout">退出</a>', '<a href="/logout">Exit</a>'];
   var newsletter_input_username = ['请输入账号','username'];
   var newsletter_input_password = ['请输入密码','password'];
   var newsletter_input_submit = ['提交','submit'];
@@ -21,6 +24,8 @@
       language = 0;
     }
     $("#newsletter-header").html(newsletter_header_html[language]);
+    $("#newsletter-header-manage").html(newsletter_header_manage[language]);
+    $("#newsletter-header-exit").html(newsletter_header_exit[language]);
     $("#newsletter-input-username").attr("placeholder",newsletter_input_username[language]);
     $("#newsletter-input-password").attr("placeholder",newsletter_input_password[language]);
     $("#newsletter-input-submit").attr("value",newsletter_input_submit[language]);
