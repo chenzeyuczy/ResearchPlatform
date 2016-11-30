@@ -37,6 +37,8 @@ Start administration application.
 	admin db/
 
 After that, the server is running at `http://localhost:3000`.
+
+Browsers with modern kernel, such as Google Chrome, Firefox are recommended.
     
 ### Copytight
 

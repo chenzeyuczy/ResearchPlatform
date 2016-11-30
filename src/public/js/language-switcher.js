@@ -1,8 +1,8 @@
 ﻿$(document).ready(function(){
   var language = 0;
   var user_status_html = ['<strong><a href="/register"><u>注册</u></a></strong> 以登陆研究平台','<strong><a href="/register"><u>Sign up</u></a></strong> to login'];
-  var user_status_manage = ['<a href="/#",onclick="javascript:event.target.port=8080">管理</a>',
-                                  '<a href="/#",onclick="javascript:event.target.port=8080">Administration</a>'];
+  var user_status_manage = ['<a href="/#",onclick="javascript:event.target.port=3001">管理</a>',
+                                  '<a href="/#",onclick="javascript:event.target.port=3001">Administration</a>'];
   var user_status_exit = ['<a href="/logout">退出</a>', '<a href="/logout">Exit</a>'];
   var user_status_username = ['请输入账号','username'];
   var user_status_password = ['请输入密码','password'];
