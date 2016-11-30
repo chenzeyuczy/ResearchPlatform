@@ -1,18 +1,17 @@
 // User_Status
 .user-state-div
-  - var user_login = true
   if user_login
-    a(href='/index.html') Username
+    a(href='/#') #{username}
     <br>
-    a(href='/index.html') Manage Pages
+    a(href='/#') Manage Pages
     <br>
-    a(href='/index.html') Exit
+    a(href='/logout') Exit
   else
     a(href='/register')
       u 注册
     |  以登陆研究平台
     //- .newsletter-form
-    input(type='text', name='username', placeholder='请输入账号')
-    input(type='password', name='password', placeholder='请输入密码')
-    input(type='submit', value='submit')
-
+    form(action='/login', method='POST')
+      input(type='text', name='username', placeholder='请输入账号')
+      input(type='password', name='password', placeholder='请输入密码')
+      input(type='submit', value='submit')
