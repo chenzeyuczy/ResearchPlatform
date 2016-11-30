@@ -4,19 +4,18 @@
     p
       a(href='/#') #{username}
     <br>
-    p#newsletter-header-manage
+    p#user-status-manage
       a(href='/#', onclick='javascript:event.target.port=8080') 管理
     <br>
-    p#newsletter-header-exit
+    p#user-status-exit
       a(href='/logout') 退出
   else
-    p#newsletter-header
+    p#user-status
       strong
         a(href='/register')
           u 注册
       |  以登陆研究平台
     form(action='/login', method='POST')
-      input#newsletter-input-username(type='text', name='username', placeholder='请输入账号')
-      input#newsletter-input-password(type='password', name='password', placeholder='请输入密码')
-      input#newsletter-input-submit(type='submit', value='提交')
-
+      input#user-status-username(type='text', name='username', placeholder='请输入账号')
+      input#user-status-password(type='password', name='password', placeholder='请输入密码')
+      input#user-status-submit(type='submit', value='提交')

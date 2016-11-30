@@ -8,30 +8,15 @@ block content
     section.section.full-width-bg.gray-bg
       .row
         .col-lg-9.col-md-9.col-sm-8
-          form#signUp-form(action='php/contact-form.php', method='POST')
+          form#signUp-form(action='/register', method='POST')
             .notification-input
               label 请输入用户名
               .info
-                input(type='text')
-                label Username is taken
+                input(type='username', name='username')
               label 请输入密码
               .info
-                input(type='password')
-                label Username is taken
-              label 请重复密码
-              .info
-                input(type='password')
-                label Username is taken
-              label 请输入邮箱
-              .info
-                input(type='text')
-                label Username is taken
-            div
-              input#radio-1(type='radio', name='radiogroup')
-              label(for='radio-1') 男
-              input#radio-2(type='radio', name='radiogroup')
-              label(for='radio-2') 女
-            input(type='submit', value='submit')
+                input(type='password', name='password')
+            input(type='submit', value='Register')
         // Sidebar
         .col-lg-3.col-md-3.col-sm-4.sidebar
           // Upcoming Events
