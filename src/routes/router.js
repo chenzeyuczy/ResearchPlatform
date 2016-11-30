@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var db_config = require('../db/db_config');
+<<<<<<< HEAD
 var mysql = require('mysql');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
@@ -33,6 +34,10 @@ passport.deserializeUser(function(user, done) {
   done(null, {username: user.username, type: user.type});
 });
 
+=======
+var mysql = require('mysql')
+var months = ['JAN', 'FEB', "MAR", 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+>>>>>>> b5c971b8110f4dd33ce6349eda7071feb369ce7e
 
 /* Index page */
 router.get('/', function(req, res, next) {
@@ -304,12 +309,12 @@ router.get('/member/:mb_id', function(req, res, next) {
 router.get('/news', function(req, res, next) {
 	var result = [];
 	var connection = mysql.createConnection(db_config);
-	var sql = 'SELECT ne_title AS title, ne_id AS id FROM news;';
+	var sql = 'SELECT ne_title AS title, ne_id AS id, EXTRACT(year FROM ne_date) AS year, EXTRACT(month FROM ne_date) AS month, EXTRACT(day FROM ne_date) AS day FROM news ORDER BY ne_date;';
 	connection.connect();
 	connection.query(sql, function(err, rows, fields) {
 		if (err) throw err;
 		for (i = 0; i < rows.length; i++) {
-			result.push({'title': rows[i].title, 'link': '/news/' + rows[i].id});
+			result.push({'title': rows[i].title, 'link': '/news/' + rows[i].id, 'year': rows[i].year, 'month': months[rows[i].month - 1], 'day': rows[i].day});
 		}
 		console.log('Number of matched query: ', rows.length);
 		console.log(result);
@@ -318,8 +323,9 @@ router.get('/news', function(req, res, next) {
 });
 
 router.get('/news/:ne_id', function(req, res, next) {
+	var result = new Object();
 	var connection = mysql.createConnection(db_config);
-	var sql = 'SELECT ne_title AS title, ne_content AS content FROM news WHERE ne_id = ' + req.params['ne_id'] + ';';
+	var sql = 'SELECT ne_title AS title, ne_content AS content, EXTRACT(year FROM ne_date) AS year, EXTRACT(month FROM ne_date) AS month, EXTRACT(day FROM ne_date) AS day FROM news WHERE ne_id = ' + req.params['ne_id'] + ';';
 	connection.connect();
 	connection.query(sql, function(err, rows, fields) {
 		if (err) {
@@ -329,7 +335,12 @@ router.get('/news/:ne_id', function(req, res, next) {
 		console.log('Number of matched query: ', rows.length);
 		console.log(rows);
 		if (rows.length > 0) {
-			res.render('detail', {content_type: 'News', content_type_cn: '新闻动态', title: rows[0].title, detail: rows[0].content});
+			result['title'] = rows[0].title;
+			result['detail'] = rows[0].content;
+			result['year'] = rows[0].year;
+			result['month'] = rows[0].month;
+			result['day'] = rows[0].day;
+			res.render('detail', {content_type: 'News', content_type_cn: '新闻动态', content: result});
 		} else {
 			res.render('detail', {content_type: 'News', content_type_cn: '新闻动态'});
 		}
@@ -342,10 +353,10 @@ router.get('/notification', function(req, res, next) {
 	var result = [];
 	var connection = mysql.createConnection(db_config);
 	connection.connect();
-	connection.query('SELECT nt_title AS title, nt_id AS id FROM notification;', function(err, rows, fields) {
+	connection.query('SELECT nt_title AS title, nt_id AS id, EXTRACT(year FROM nt_date) AS year, EXTRACT(month FROM nt_date) AS month, EXTRACT(day FROM nt_date) AS day FROM notification ORDER BY nt_date;', function(err, rows, fields) {
 		if (err) throw err;
 		for (i = 0; i < rows.length; i++) {
-			result.push({'title': rows[i].title, 'link': '/notification/' + rows[i].id});
+			result.push({'title': rows[i].title, 'link': '/notification/' + rows[i].id, 'year': rows[i].year, 'month': months[rows[i].month - 1], 'day': rows[i].day});
 		}
 		console.log('Number of matched query: ', rows.length);
 		console.log(result);
@@ -355,8 +366,9 @@ router.get('/notification', function(req, res, next) {
 });
 
 router.get('/notification/:nt_id', function(req, res, next) {
+	var result = new Object();
 	var connection = mysql.createConnection(db_config);
-	var sql = 'SELECT nt_title AS title, nt_content AS content FROM notification WHERE nt_id = ' + req.params['nt_id'] + ';';
+	var sql = 'SELECT nt_title AS title, nt_content AS content, EXTRACT(year FROM nt_date) AS year, EXTRACT(month FROM nt_date) AS month, EXTRACT(day FROM nt_date) AS day FROM notification WHERE nt_id = ' + req.params['nt_id'] + ';';
 	connection.connect();
 	connection.query(sql, function(err, rows, fields) {
 		if (err) {
@@ -366,7 +378,12 @@ router.get('/notification/:nt_id', function(req, res, next) {
 		console.log('Number of matched query: ', rows.length);
 		console.log(rows);
 		if (rows.length > 0) {
-			res.render('detail', {content_type: 'Notification', content_type_cn: '最新公告', title: rows[0].title, detail: rows[0].content});
+			result['title'] = rows[0].title;
+			result['detail'] = rows[0].content;
+			result['year'] = rows[0].year;
+			result['month'] = rows[0].month;
+			result['day'] = rows[0].day;
+			res.render('detail', {content_type: 'Notification', content_type_cn: '最新公告', content: result});
 		} else {
 			res.render('detail', {content_type: 'Notification', content_type_cn: '最新公告'});
 		}

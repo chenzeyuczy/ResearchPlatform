@@ -12,27 +12,17 @@ block content
           .blog-post-single.fullwidth-post
             .post-side-meta.animate-onscroll
               .date(style='padding-Top:0')
-                span.day 17
-                span.month DEC
-              .post-comments
-                a(href='blog-single-sidebar.html#comments')
-                  i.icons.icon-chat-empty
-                  |  13
-            h1(style='margin-Top:20px') #{title}
+                span.day #{content.day}
+                span.month #{content.month}
+                span.year #{content.year}
+            h1(style='margin-Top:20px') #{content.title}
             .post-meta.animate-onscroll
               span
                 | by 
                 a(href='#') admin
-              span
-                | in 
-                a(href='#') Politics
-                | , 
-                a(href='#') Videos
             .post-content
               p.animate-onscroll.no-margin-bottom
-                | #{detail}
-                br
-                | Vivamus eget nibh. Etiam cursus leo vel metus. Nulla facilisi. Aenean nec eros. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse sollicitudin velit sed leo. Ut pharetra augue nec augue. Nam elit agna,endrerit sit amet, tincidunt ac, viverra sed, nulla. Donec porta diam eu massa. Quisque diam lorem, interdum vitae,dapibus ac, scelerisque vitae, pede. Donec eget tellus non erat lacinia fermentum. Donec in velit vel ipsum auctor pulvinar. Vestibulum iaculis lacinia est. Proin dictum elementum velit.
+                | #{content.detail}
               
             // Post Meta Track
             .post-meta-track.animate-onscroll
