@@ -6906,7 +6906,9 @@ input.numeric-input:focus{
     -moz-transition: color 0.3s;
 }
 
-
+.user-state-div p {
+    margin: 0px 0;
+}
 
 /* ==================================== */
 		      /* Responsive */

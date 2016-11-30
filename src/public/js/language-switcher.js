@@ -3,6 +3,7 @@
   var newsletter_header_html = ['<strong><a  href="signUp.html"><u>注册</u></a></strong> 以登陆研究平台','<strong><a  href="signUp.html"><u>Sign up</u></a></strong> to login'];
   var newsletter_input_username = ['请输入账号','username'];
   var newsletter_input_password = ['请输入密码','password'];
+  var newsletter_input_submit = ['提交','submit'];
   var menu_cn = ['关于项目','研究团队','新闻动态','最新公告','学术交流','数据工具','联系我们'];
   var menu_en = ['Project', 'Team', 'News', 'Notification', 'Symposium', 'Data/Tools', 'Contact'];
   var related_links = ['相关链接','Related Links'];
@@ -22,6 +23,7 @@
     $("#newsletter-header").html(newsletter_header_html[language]);
     $("#newsletter-input-username").attr("placeholder",newsletter_input_username[language]);
     $("#newsletter-input-password").attr("placeholder",newsletter_input_password[language]);
+    $("#newsletter-input-submit").attr("value",newsletter_input_submit[language]);
     $("#related-links").text(related_links[language]);
     $("#authors").text(authors[language]);
     $("#publishment-img").text(publishment[language]);
