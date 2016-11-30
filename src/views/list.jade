@@ -15,8 +15,9 @@ block content
                 .post-content
                   .post-side-meta
                     .date
-                      span.day 17
-                      span.month DEC
+                      span.day #{item.day}
+                      span.month #{item.month}
+                      span.year #{item.year}
                   .post-header
                     h2
                       a(href=item.link)
@@ -25,11 +26,6 @@ block content
                       span
                         | by 
                         a(href='#') admin
-                      span
-                        | in 
-                        a(href='#') Politics
-                        | , 
-                        a(href='#') Meetings
                   .post-exceprt
                     a.button.read-more-button.big.button-arrow(href=item.link) Read More
               // /Accordion
