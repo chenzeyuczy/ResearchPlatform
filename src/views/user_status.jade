@@ -4,11 +4,11 @@
     p
       a(href='/#') #{username}
     <br>
-    p#user-status-manage
-      a(href='/#', onclick='javascript:event.target.port=3001') 管理
+    p
+      a#user-status-manage(href='/#', onclick='javascript:event.target.port=3001') 管理
     <br>
-    p#user-status-exit
-      a(href='/logout') 退出
+    p
+      a#user-status-exit(href='/logout') 退出
   else
     p#user-status
       strong
