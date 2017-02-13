@@ -1,7 +1,7 @@
 # Research Platform
 
 ### Dependency
-* [Nojejs 6.9.1](https://nodejs.org/)
+* [Nodejs 6.9.1](https://nodejs.org/)
 * [MySQL 5.7](https://www.mysql.com/)
 
 ### Operation System

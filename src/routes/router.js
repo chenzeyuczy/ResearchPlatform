@@ -268,15 +268,15 @@ router.get('/member/:mb_id', function(req, res, next) {
 			}, function(err) {
 					if (err) throw err;
 					res.render('team_member', {
-					user_login: req.user ? true : false,
-					username: req.user ? req.user.username : null,
-					content_type: 'Research Teams',
-					content_type_cn: '研究团队',
-					main_team: teams[0],
-					other_teams: teams.slice(1),
-					current_member: current_member,
-					show_detail: true,
-					show_team: false
+						user_login: req.user ? true : false,
+						username: req.user ? req.user.username : null,
+						content_type: 'Research Teams',
+						content_type_cn: '研究团队',
+						main_team: teams[0],
+						other_teams: teams.slice(1),
+						current_member: current_member,
+						show_detail: true,
+						show_team: false
 					});
 			});
 		});
@@ -589,7 +589,7 @@ router.post('/register', function(req, res, next) {
 	res.redirect('index');
 });
 
-// TODO
+/* Login & logout page */
 router.post('/login',
 	passport.authenticate('local', {
 		successRedirect: '/index',
@@ -602,6 +602,7 @@ router.get('/logout', function(req, res, next) {
 	res.redirect('/index');
 });
 
+/* Contact page */
 router.get('/contact', function(req, res, next) {
 	res.render('contact', {
 		user_login: req.user ? true : false,
